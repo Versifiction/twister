@@ -1,0 +1,29 @@
+.flex {
+  display: flex;
+  padding: 4px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.root-link {
+  padding: 10px 0;
+}
+
+.main-nav {
+  padding-bottom: 20px;
+}
+
+.logo {
+  width: 30px;
+}
+
+.sidenav {
+  background-color: #15202b !important;
+}
+
+.sidenav li > a {
+  padding: 0;
+}

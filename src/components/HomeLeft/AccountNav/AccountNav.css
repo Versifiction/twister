@@ -1,0 +1,12 @@
+.account-nav {
+  list-style: none;
+}
+
+.account-nav li {
+  margin-bottom: 20px;
+}
+
+.account-nav li a {
+  color: white;
+  font-size: 1.25rem;
+}

@@ -1,0 +1,5 @@
+aside p {
+  display: inline-block;
+  color: rgb(136, 153, 166);
+  margin-right: 8px;
+}

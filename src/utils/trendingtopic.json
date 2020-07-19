@@ -1,0 +1,12 @@
+[
+  { "id": 1, "libelle": "Fifa", "category": "Divertissement" },
+  { "id": 2, "libelle": "Mbappe", "category": "Football" },
+  { "id": 3, "libelle": "Zidane", "category": "Football" },
+  { "id": 4, "libelle": "PS5", "category": "Divertissement" },
+  { "id": 5, "libelle": "NBA 2K20", "category": "Divertissement" },
+  { "id": 6, "libelle": "Call of Duty", "category": "Divertissement" },
+  { "id": 7, "libelle": "Macron", "category": "Politique" },
+  { "id": 8, "libelle": "GTA V", "category": "Divertissement" },
+  { "id": 9, "libelle": "Ratchet & Clank", "category": "Divertissement" },
+  { "id": 10, "libelle": "Crash Bandicoot", "category": "Divertissement" }
+]
