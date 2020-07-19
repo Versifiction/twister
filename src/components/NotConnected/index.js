@@ -1,20 +1,13 @@
 import React from "react";
 
 import "./NotConnected.css";
-import { bgNotConnected } from "../../assets/bg-not-connected.png";
-import { twitterLogoSVG } from "../../assets/twitter-logo.svg";
+import twitterLogoSVG from "../../assets/twitter-logo.svg";
 
 function NotConnected() {
   return (
     <div className="NotConnected">
       <section className="not-connected row">
-        <div className="nc-col-1 col s12 m6">
-          <img
-            src={bgNotConnected}
-            className="nc-logo"
-            alt="Logo pas connecté"
-          />
-        </div>
+        <div className="nc-col-1 col s12 m6"></div>
         <div className="nc-col-2 col s12 m6">
           <div className="container">
             <div className="row">

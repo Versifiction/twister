@@ -7,6 +7,10 @@ import "./App.css";
 import store from "./store";
 
 import Accueil from "./pages/Accueil";
+import APropos from "./pages/APropos";
+import Contact from "./pages/Contact";
+import ConditionsUtilisation from "./pages/ConditionsUtilisation";
+import Cookies from "./pages/Cookies";
 import Erreur from "./pages/Erreur";
 
 if (localStorage.jwtToken) {
@@ -25,6 +29,14 @@ function Router() {
   return (
     <Switch>
       <Route path="/" exact component={Accueil} />
+      <Route path="/a-propos" exact component={APropos} />
+      <Route path="/contact" exact component={Contact} />
+      <Route
+        path="/conditions-utilisation"
+        exact
+        component={ConditionsUtilisation}
+      />
+      <Route path="/cookies" exact component={Cookies} />
       <Route component={Erreur} />
     </Switch>
   );

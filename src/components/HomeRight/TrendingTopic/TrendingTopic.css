@@ -1,0 +1,52 @@
+.trending-topic {
+  background-color: #192734;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.trending-topic-line {
+  color: grey;
+}
+
+.trending-topic p {
+  color: white;
+}
+
+.trending-topic-content {
+  border-bottom: 1px solid grey;
+}
+
+.trending-topic-before {
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  border-bottom: 1px solid grey;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.trending-topic-after {
+  border-radius: 0 0 15px 15px;
+  display: flex;
+  cursor: pointer;
+}
+
+.trending-topic-after:hover,
+.trending-topic-content:hover {
+  background-color: #aaa;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.trending-topic-libelle {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.see-all {
+  color: #1a91da;
+}
+
+.padding {
+  padding: 20px;
+}

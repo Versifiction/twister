@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import "./Accueil.css";
@@ -11,10 +11,6 @@ import Infos from "../../components/HomeRight/Infos";
 import NotConnected from "../../components/NotConnected";
 
 function Accueil({ isConnected }) {
-  useEffect(() => {
-    console.log("is c ", isConnected);
-  }, [isConnected]);
-
   return (
     <div className="Accueil">
       {isConnected ? (
@@ -24,7 +20,7 @@ function Accueil({ isConnected }) {
             <div class="col m12 l3">
               <AccountNav />
             </div>
-            <div class="col m12 l6">
+            <div class="col m12 l6 centered">
               <Feed />
             </div>
             <div class="col m12 l3">
@@ -42,7 +38,7 @@ function Accueil({ isConnected }) {
 }
 
 const mapStateToProps = (state) => ({
-  counter: state.user.isConnected,
+  isConnected: state.user.isConnected,
 });
 
-export default connect(mapStateToProps, null)(Accueil);
+export default connect(mapStateToProps)(Accueil);

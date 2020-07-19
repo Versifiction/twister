@@ -16,6 +16,13 @@
   display: block;
 }
 
+.nc-col-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 .nc-col-2 .row {
   width: 400px;
   margin: 0 auto;
@@ -23,6 +30,14 @@
 
 .not-connected p {
   text-align: center;
+}
+
+.nc-col-1 {
+  background-image: url("../../assets/bg-not-connected.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
 }
 
 @media screen and (max-width: 600px) {
