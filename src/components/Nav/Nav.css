@@ -1,11 +1,8 @@
 .flex {
   display: flex;
   padding: 4px;
-}
-
-.flex-center {
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .root-link {
@@ -26,4 +23,28 @@
 
 .sidenav li > a {
   padding: 0;
+}
+
+.nav-right .fa-sign-out,
+.nav-right .fa-user {
+  color: #3aaae1;
+}
+
+.fa-sign-out {
+  margin-left: 6px;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-username {
+  display: inline;
+  margin-right: 4px;
+  color: #3aaae1;
 }

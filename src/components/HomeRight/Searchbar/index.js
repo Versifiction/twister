@@ -4,20 +4,20 @@ import "./Searchbar.css";
 
 function Searchbar() {
   return (
-    <nav class="searchbar">
-      <div class="nav-wrapper">
+    <nav className="searchbar">
+      <div className="nav-wrapper">
         <form>
-          <div class="input-field">
+          <div className="input-field">
             <input
               id="search"
               type="search"
               placeholder="Recherche sur Twersi"
               required
             />
-            <label class="label-icon" for="search">
-              <i class="material-icons">search</i>
+            <label className="label-icon" htmlFor="search">
+              <i className="material-icons">search</i>
             </label>
-            <i class="material-icons">close</i>
+            <i className="material-icons">close</i>
           </div>
         </form>
       </div>

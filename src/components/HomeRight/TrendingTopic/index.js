@@ -9,18 +9,18 @@ function TrendingTopic() {
 
   return (
     <div className="trending-topic">
-      <div class="trending-topic-before padding">
+      <div className="trending-topic-before padding">
         <span>Tendances : France</span>
       </div>
       {trends &&
         trends.map((data) => (
           <div key={data.id} className="trending-topic-content padding">
-            <div class="trending-topic-line">
+            <div className="trending-topic-line">
               <span>{data.id}</span>
               <span>-</span>
               <span>{data.category}</span>
             </div>
-            <div class="trending-topic-libelle">
+            <div className="trending-topic-libelle">
               <p>{data.libelle}</p>
             </div>
           </div>

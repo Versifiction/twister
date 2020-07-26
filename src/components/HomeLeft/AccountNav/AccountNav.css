@@ -3,10 +3,27 @@
 }
 
 .account-nav li {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .account-nav li a {
   color: white;
   font-size: 1.25rem;
+}
+
+.account-nav li a i {
+  width: 20px;
+}
+
+.active {
+  color: #3aaae1 !important;
+  font-weight: bold;
+}
+
+.icon-account-nav {
+  margin-right: 8px;
+}
+
+.active .fa {
+  color: #3aaae1;
 }
