@@ -27,3 +27,8 @@ input,
 textarea {
   color: white;
 }
+
+.input-field {
+  display: flex;
+  align-items: center;
+}

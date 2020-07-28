@@ -35,7 +35,9 @@ router.post("/new-tweet", cors(corsOptions), async function (req, res) {
 });
 
 router.get("/:id", cors(corsOptions), async function (req, res) {
-  const tweets = await Tweet.find({ writerId: req.params.id });
+  const tweets = await Tweet.find({ writerId: req.params.id }).sort({
+    tweetedAt: -1,
+  });
   res.send(tweets);
 });
 

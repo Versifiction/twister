@@ -1,0 +1,21 @@
+.AccountTweet {
+  padding: 10px;
+  border-top: 1px solid white;
+}
+
+.AccountTweet-name,
+.AccountTweet-username,
+.AccountTweet-tweetedAt,
+.AccountTweet-bullet {
+  margin-right: 4px;
+}
+
+.AccountTweet-username,
+.AccountTweet-tweetedAt,
+.AccountTweet-bullet {
+  color: #8899a6;
+}
+
+.AccountTweet-name {
+  color: white;
+}

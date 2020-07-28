@@ -9,11 +9,15 @@ function AccountTweets(props) {
     <div className="AccountTweets">
       {props.tweets &&
         props.tweets.map((tweet) => (
-          <>
-            <span>{props.username}</span>
-            <span>{moment(tweet.tweetedAt).locale("fr").calendar()}</span>
-            <p>{tweet.tweetValue}</p>
-          </>
+          <div className="AccountTweet">
+            <span className="AccountTweet-name">{props.name}</span>
+            <span className="AccountTweet-username">@{props.username}</span>
+            <span className="AccountTweet-bullet">•</span>
+            <span className="AccountTweet-tweetedAt">
+              {moment(tweet.tweetedAt).locale("fr").calendar()}
+            </span>
+            <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
+          </div>
         ))}
     </div>
   );

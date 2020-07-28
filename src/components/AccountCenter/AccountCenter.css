@@ -30,3 +30,16 @@
   justify-content: flex-end;
   margin: -70px 0 25px 0;
 }
+
+.account-header {
+  padding: 10px;
+}
+
+.fa-calendar {
+  color: #3aaae1;
+  margin-right: 4px;
+}
+
+.AccountCenter {
+  border: 1px solid white;
+}
