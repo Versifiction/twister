@@ -8,7 +8,7 @@ export const registerUser = (userData) => (dispatch) => {
   console.log(userData);
   axios
     .post(`${process.env.REACT_APP_SERVER_PORT}/api/users/register`, userData)
-    .then((res) => (window.location.href = "/"))
+    .then((res) => (window.location.href = "/home"))
     .catch((err) => {
       console.log("err ", err);
       dispatch({
@@ -28,7 +28,7 @@ export const loginUser = (userData) => (dispatch) => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
-      window.location.href = "/";
+      window.location.href = "/home";
     })
     .catch((err) => {
       console.log("err ", err);
@@ -50,4 +50,5 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
+  window.location.href = "/connexion";
 };

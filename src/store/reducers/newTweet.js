@@ -1,4 +1,7 @@
-import { INPUT_CHANGE } from "../constants/types";
+import {
+  NEW_TWEET_INPUT_CHANGE,
+  RESET_NEW_TWEET_INPUT,
+} from "../constants/types";
 
 const initialState = {
   tweetValue: "",
@@ -10,8 +13,10 @@ const initialState = {
 
 export default function newTweet(state = initialState, action) {
   switch (action.type) {
-    case INPUT_CHANGE:
-      return (state.tweetValue = action.value);
+    case NEW_TWEET_INPUT_CHANGE:
+      return { ...state, tweetValue: action.payload };
+    case RESET_NEW_TWEET_INPUT:
+      return { ...state, tweetValue: "" };
     default:
       return state;
   }

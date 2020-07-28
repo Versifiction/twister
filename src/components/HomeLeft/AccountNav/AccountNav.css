@@ -24,6 +24,51 @@
   margin-right: 8px;
 }
 
-.active .fa {
-  color: #3aaae1;
+.active .fa,
+.fa-times,
+.new-tweet-title,
+.new-tweet-max-length {
+  color: #3aaae1 !important;
+}
+
+#modal1 {
+  height: 300px;
+  width: 600px;
+  background-color: #15202b;
+  padding: 20px;
+}
+
+.modal .modal-footer {
+  background-color: inherit !important;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.new-tweet-counter-container {
+  margin-right: 10px;
+}
+
+.modal-content input[type="text"]:not(.browser-default):focus:not([readonly]),
+.modal-content input[type="text"]:not(.browser-default) {
+  border-bottom: inherit;
+  box-shadow: inherit;
+}
+
+textarea {
+  border: none !important;
+  resize: none !important;
+}
+
+textarea:focus {
+  outline: 0 !important;
+  border: none !important;
+}
+
+.new-tweet-length {
+  color: white;
+}
+
+.new-tweet-length-red {
+  color: red !important;
 }

@@ -1,0 +1,32 @@
+.banner-img {
+  width: 100%;
+  height: 200px;
+}
+
+.profile-img-container {
+  height: 130px;
+  margin: -65px 0 15px 20px;
+  width: 130px;
+  border-radius: 100%;
+}
+
+.profile-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 100%;
+  border: 4px solid #15202b;
+}
+
+.account-name {
+  font-weight: bold;
+}
+
+.account-username {
+  font-weight: #ccc;
+}
+
+.account-edit {
+  display: flex;
+  justify-content: flex-end;
+  margin: -70px 0 25px 0;
+}

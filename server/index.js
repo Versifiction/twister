@@ -10,6 +10,7 @@ const helmet = require("helmet");
 const port = process.env.SERVER_PORT || 5000;
 const app = express();
 const users = require("./routes/api/users");
+const tweets = require("./routes/api/tweets");
 
 require("dotenv").config();
 // require("./config/passport")(passport);
@@ -47,6 +48,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use("/api/users", users);
+app.use("/api/tweets", tweets);
 
 app.get("/", function (req, res) {
   res.send(

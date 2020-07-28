@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 
 import "./Account.css";
 import Nav from "../../components/Nav";
 import AccountNav from "../../components/HomeLeft/AccountNav";
-import AccountTweets from "../../components/AccountCenter/AccountTweets";
+import AccountCenter from "../../components/AccountCenter";
 import Searchbar from "../../components/HomeRight/Searchbar";
 import TrendingTopic from "../../components/HomeRight/TrendingTopic";
 import Infos from "../../components/HomeRight/Infos";
 
-function Account() {
+function Account(props) {
   useEffect(() => {
-    document.title = "Twister | Account";
+    document.title = `Twister | ${props.username}`;
   }, []);
 
   return (
@@ -22,7 +23,7 @@ function Account() {
             <AccountNav />
           </div>
           <div className="col m12 l6 centered">
-            <AccountTweets />
+            <AccountCenter urlName={props.match.params.username} />
           </div>
           <div className="col m12 l3">
             <Searchbar />
@@ -35,4 +36,8 @@ function Account() {
   );
 }
 
-export default Account;
+const mapStateToProps = (state) => ({
+  username: state.user.current.username,
+});
+
+export default connect(mapStateToProps)(Account);

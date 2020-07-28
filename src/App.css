@@ -17,3 +17,13 @@ p {
 a {
   color: #3aaae1;
 }
+
+.btn,
+.btn-large {
+  background-color: #3aaae1 !important;
+}
+
+input,
+textarea {
+  color: white;
+}

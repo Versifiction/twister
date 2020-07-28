@@ -10,7 +10,6 @@ import twitterLogoSVG from "../../assets/twitter-logo.png";
 function Nav(props) {
   return (
     <div className="Nav flex main-nav centered">
-      <div></div>
       <div>
         <NavLink
           className="root-link"
@@ -26,18 +25,17 @@ function Nav(props) {
           <i className="fa fa-user" aria-hidden="true"></i>
           <p className="nav-username">@{props.username}</p>
         </Link>
-        <i
-          className="fa fa-sign-out"
-          aria-hidden="true"
-          onClick={props.logoutUser}
-        ></i>
+        <div onClick={props.logoutUser} className="nav-pointer">
+          <i className="fa fa-sign-out" aria-hidden="true"></i>
+          <p className="nav-logout">Me déconnecter</p>
+        </div>
       </div>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  username: state.user.infos.username,
+  username: state.user.current.username,
 });
 
 const mapDispatchToProps = (dispatch) =>

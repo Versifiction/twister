@@ -12,11 +12,7 @@ const router = express.Router();
 let User = require("../../models/User");
 const BCRYPT_SALT_ROUNDS = 12;
 
-const whitelist = [
-  "http://localhost:3000",
-  "http://localhost:5000",
-  "https://ofilms.herokuapp.com",
-];
+const whitelist = ["http://localhost:3000", "http://localhost:5000"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -32,8 +28,11 @@ router.get("/getAll", cors(corsOptions), async function (req, res) {
   res.send(users);
 });
 
-router.get("/getOne", cors(corsOptions), async function (req, res) {
-  const user = await User.find({ _id: req.body.id });
+router.get("/user/:username", cors(corsOptions), async function (req, res) {
+  const user = await User.find(
+    { username: req.params.username },
+    { password: 0 }
+  );
   res.send(user);
 });
 
@@ -65,6 +64,15 @@ router.post("/register", cors(corsOptions), async function (req, res) {
           username: req.body.username,
           name: req.body.name,
           password: req.body.password,
+          biography: "",
+          banner: "",
+          profilePicture: "",
+          following: [],
+          followers: [],
+          retweets: [],
+          likes: [],
+          lists: [],
+          protected: false,
           connected: false,
           verified: false,
           resetPasswordToken: null,

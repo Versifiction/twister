@@ -1,25 +1,39 @@
 import isEmpty from "is-empty";
 
-import { SET_CURRENT_USER, LOGIN, LOGOUT } from "../actions/types";
+import {
+  GET_USER_INFO,
+  GET_USER_TWEETS,
+  LOGIN,
+  LOGOUT,
+  SET_CURRENT_USER,
+} from "../constants/types";
 
 const initialState = {
   isConnected: false,
-  user: {},
+  current: {},
+  profile: {},
+  tweets: [],
 };
 
 export default function user(state = initialState, action) {
   switch (action.type) {
+    case GET_USER_INFO:
+      return {
+        ...state,
+        profile: action.payload,
+      };
+    case GET_USER_TWEETS:
+      return { ...state, tweets: action.payload };
     case SET_CURRENT_USER:
       return {
         ...state,
         isConnected: !isEmpty(action.payload),
-        infos: action.payload,
+        current: action.payload,
       };
     case LOGIN:
       return { ...state, isConnected: true };
     case LOGOUT:
-      return { ...state, isConnected: false, user: {} };
-
+      return { ...state, isConnected: false, current: {} };
     default:
       return state;
   }

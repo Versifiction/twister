@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
+import moment from "moment";
+import "moment/locale/fr";
 
 import "./AccountTweets.css";
 
-function AccountTweets() {
+function AccountTweets(props) {
   return (
     <div className="AccountTweets">
-      <p>Ici seront affichés vos tweets !</p>
+      {props.tweets &&
+        props.tweets.map((tweet) => (
+          <>
+            <span>{props.username}</span>
+            <span>{moment(tweet.tweetedAt).locale("fr").calendar()}</span>
+            <p>{tweet.tweetValue}</p>
+          </>
+        ))}
     </div>
   );
 }

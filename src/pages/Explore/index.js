@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import "./Account.css";
+import "./Explore.css";
 import Nav from "../../components/Nav";
 import AccountNav from "../../components/HomeLeft/AccountNav";
 import AccountTweets from "../../components/AccountCenter/AccountTweets";

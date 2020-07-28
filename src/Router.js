@@ -6,11 +6,13 @@ import { setCurrentUser, logoutUser } from "./store/actions/auth";
 import "./App.css";
 import store from "./store";
 
+import Root from "./pages/Root";
 import Accueil from "./pages/Accueil";
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
 import Account from "./pages/Account";
 import Lists from "./pages/Lists";
+import Explore from "./pages/Explore";
 import Settings from "./pages/Settings";
 import Notifications from "./pages/Notifications";
 import Messages from "./pages/Messages";
@@ -36,11 +38,13 @@ if (localStorage.jwtToken) {
 function Router() {
   return (
     <Switch>
+      <Route path="/" exact component={Root} />
       <Route path="/home" exact component={Accueil} />
       <Route path="/connexion" exact component={Connexion} />
       <Route path="/inscription" exact component={Inscription} />
-      <Route path="/account" exact component={Account} />
+      <Route path="/user/:username" exact component={Account} />
       <Route path="/notifications" exact component={Notifications} />
+      <Route path="/explore" exact component={Explore} />
       <Route path="/messages" exact component={Messages} />
       <Route path="/signets" exact component={Signets} />
       <Route path="/lists" exact component={Lists} />
