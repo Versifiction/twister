@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import "./Notifications.css";
 import Nav from "../../components/Nav";
 import AccountNav from "../../components/HomeLeft/AccountNav";
-import AccountTweets from "../../components/AccountCenter/AccountTweets";
 import Searchbar from "../../components/HomeRight/Searchbar";
 import TrendingTopic from "../../components/HomeRight/TrendingTopic";
 import Infos from "../../components/HomeRight/Infos";
@@ -21,9 +20,7 @@ function Notifications() {
           <div className="col m12 l3">
             <AccountNav />
           </div>
-          <div className="col m12 l6 centered">
-            <AccountTweets />
-          </div>
+          <div className="col m12 l6 centered"></div>
           <div className="col m12 l3">
             <Searchbar />
             <TrendingTopic />

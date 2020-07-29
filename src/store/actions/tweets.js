@@ -10,10 +10,9 @@ export const sendNewTweet = (tweet) => (dispatch) => {
   axios
     .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/new-tweet`, tweet)
     .then((res) => {
-      console.log("res ", res);
       dispatch({
         type: SEND_NEW_TWEET,
-        payload: res.data[0],
+        payload: res.data,
       });
     })
     .catch((err) => {

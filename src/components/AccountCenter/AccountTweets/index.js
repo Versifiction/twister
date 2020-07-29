@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment";
 import "moment/locale/fr";
 import { connect } from "react-redux";
@@ -13,8 +13,10 @@ function AccountTweets(props) {
       {props.tweets &&
         props.tweets.map((tweet) => (
           <div className="AccountTweet" key={tweet._id}>
-            <span className="AccountTweet-name">{props.name}</span>
-            <span className="AccountTweet-username">@{props.username}</span>
+            <span className="AccountTweet-name">{props.profile.name}</span>
+            <span className="AccountTweet-username">
+              @{props.profile.username}
+            </span>
             <span className="AccountTweet-bullet">•</span>
             <span className="AccountTweet-tweetedAt">
               {moment(tweet.tweetedAt).locale("fr").calendar()}

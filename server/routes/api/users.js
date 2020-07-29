@@ -10,6 +10,7 @@ const validateLoginInput = require("../../validation/login");
 
 const router = express.Router();
 let User = require("../../models/User");
+let Tweet = require("../../models/Tweet");
 const BCRYPT_SALT_ROUNDS = 12;
 
 const whitelist = ["http://localhost:3000", "http://localhost:5000"];
@@ -29,6 +30,7 @@ router.get("/getAll", cors(corsOptions), async function (req, res) {
   res.send(users);
 });
 
+// route pour avoir les infos d'un utilisateur
 router.get("/user/:username", cors(corsOptions), async function (req, res) {
   const user = await User.find(
     { username: req.params.username },

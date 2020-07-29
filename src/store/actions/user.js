@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   DELETE_USER_TWEET,
   GET_ERRORS,
+  GET_FEED_USER,
   GET_USER_INFO,
   GET_USER_TWEETS,
 } from "../constants/types";
@@ -29,7 +30,6 @@ export const getUserTweets = (id) => (dispatch) => {
   axios
     .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/${id}`)
     .then((res) => {
-      console.log("res ", res);
       dispatch({
         type: GET_USER_TWEETS,
         payload: res.data,
@@ -40,8 +40,21 @@ export const getUserTweets = (id) => (dispatch) => {
     });
 };
 
+export const getFeedUser = (id) => (dispatch) => {
+  axios
+    .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/following/${id}`)
+    .then((res) => {
+      dispatch({
+        type: GET_FEED_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
 export const deleteUserTweet = (id) => (dispatch) => {
-  console.log("delet");
   axios
     .delete(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/delete/${id}`)
     .then((res) => {

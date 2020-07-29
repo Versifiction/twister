@@ -22,6 +22,8 @@ function AccountNav(props) {
     const tweetData = {
       tweetValue: props.tweetValue,
       writerId: props.id,
+      writerName: props.name,
+      writerUsername: props.username,
     };
 
     props.sendNewTweet(tweetData);
@@ -152,6 +154,7 @@ function AccountNav(props) {
 
 const mapStateToProps = (state) => ({
   username: state.user.current.username,
+  name: state.user.current.name,
   id: state.user.current.id,
   tweetValue: state.newTweet.tweetValue,
   maxLength: state.newTweet.maxLength,

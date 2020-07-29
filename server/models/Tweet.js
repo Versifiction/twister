@@ -11,6 +11,8 @@ const TweetSchema = new Schema({
     type: String,
     required: true,
   },
+  writerName: String,
+  writerUsername: String,
   hasSurvey: Boolean,
   hasGif: Boolean,
   hasPicture: Boolean,

@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const router = express.Router();
 let Tweet = require("../../models/Tweet");
+let User = require("../../models/User");
 
 const whitelist = ["http://localhost:3000", "http://localhost:5000"];
 const corsOptions = {
@@ -20,6 +21,8 @@ router.post("/new-tweet", cors(corsOptions), async function (req, res) {
   const newTweet = new Tweet({
     tweetValue: req.body.tweetValue,
     writerId: req.body.writerId,
+    writerName: req.body.writerName,
+    writerUsername: req.body.writerUsername,
     hasSurvey: false,
     hasGif: false,
     hasPicture: false,
@@ -51,9 +54,19 @@ router.delete("/delete/:id", cors(corsOptions), async function (req, res) {
 
 // route pour avoir les tweets des abonnements d'un utilisateur (page Home -> /home)
 router.get("/following/:id", cors(corsOptions), async function (req, res) {
-  const tweets = await Tweet.find({ writerId: req.params.id }).sort({
+  const following = await User.find(
+    { _id: req.params.id },
+    { following: 1, _id: 0 }
+  );
+
+  following[0].following.push(req.params.id);
+
+  const tweets = await Tweet.find({
+    writerId: { $in: following[0].following },
+  }).sort({
     tweetedAt: -1,
   });
+
   res.send(tweets);
 });
 
