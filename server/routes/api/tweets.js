@@ -15,6 +15,7 @@ const corsOptions = {
   },
 };
 
+// route pour poster un nouveau tweet
 router.post("/new-tweet", cors(corsOptions), async function (req, res) {
   const newTweet = new Tweet({
     tweetValue: req.body.tweetValue,
@@ -34,7 +35,16 @@ router.post("/new-tweet", cors(corsOptions), async function (req, res) {
     .catch((err) => console.log(err));
 });
 
+// route pour avoir les tweets d'un utilisateur (page Account -> /user/:user)
 router.get("/:id", cors(corsOptions), async function (req, res) {
+  const tweets = await Tweet.find({ writerId: req.params.id }).sort({
+    tweetedAt: -1,
+  });
+  res.send(tweets);
+});
+
+// route pour avoir les tweets des abonnements d'un utilisateur (page Home -> /home)
+router.get("/following/:id", cors(corsOptions), async function (req, res) {
   const tweets = await Tweet.find({ writerId: req.params.id }).sort({
     tweetedAt: -1,
   });

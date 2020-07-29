@@ -5,7 +5,8 @@ import { bindActionCreators } from "redux";
 import { getUserInfo, getUserTweets } from "../../store/actions/user";
 
 import "./AccountCenter.css";
-import placeholder from "../../assets/placeholder.png";
+import placeholderPicture from "../../assets/placeholderPicture.png";
+import placeholderBanner from "../../assets/placeholderBanner.png";
 import AccountTweets from "./AccountTweets";
 
 function AccountCenter(props) {
@@ -14,29 +15,30 @@ function AccountCenter(props) {
   }, []);
 
   useEffect(() => {
-    if (props.id) {
-      props.getUserTweets(props.id);
+    console.log("profile ", props.profile);
+    if (props.profile._id) {
+      props.getUserTweets(props.profile._id);
     }
-  }, [props.id]);
+  }, [props.profile._id]);
 
   return (
     <div className="AccountCenter">
       <div className="banner-img-container">
         <img
-          src={placeholder}
+          src={placeholderBanner}
           alt="Placeholder bannière"
           className="banner-img"
         />
       </div>
       <div className="profile-img-container">
         <img
-          src={placeholder}
+          src={placeholderPicture}
           alt="Placeholder profil"
           className="profile-img"
         />
       </div>
       <div className="account-header">
-        {props.username === props.connectedUsername && (
+        {props.username === props.current.username && (
           <div className="account-edit">
             <button
               type="submit"
@@ -47,30 +49,41 @@ function AccountCenter(props) {
             </button>
           </div>
         )}
-        <p className="account-name">{props.name}</p>
-        <p className="account-username">@{props.username}</p>
-        {props.biography && <p>{props.biography}</p>}
+        <p className="account-name">{props.profile.name}</p>
+        <p className="account-username">@{props.profile.username}</p>
+        <div className="account-follows">
+          {props.profile.following && (
+            <span className="account-following">
+              <span className="bold">{props.profile.following.length}</span>{" "}
+              abonnements
+            </span>
+          )}
+          &nbsp;
+          {props.profile.followers && (
+            <span className="account-followers">
+              <span className="bold">{props.profile.followers.length}</span>{" "}
+              abonnés
+            </span>
+          )}
+        </div>
+        {props.profile.biography && <p>{props.profile.biography}</p>}
         <p>
           <i className="fa fa-calendar" aria-hidden="true"></i>A rejoint Twister
-          en {moment(props.creationDate).format("MMMM YYYY")}
+          en {moment(props.profile.creationDate).format("MMMM YYYY")}
         </p>
       </div>
       <AccountTweets
         tweets={props.tweets}
-        username={props.username}
-        name={props.name}
+        username={props.profile.username}
+        name={props.profile.name}
       />
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  connectedUsername: state.user.current.username,
-  username: state.user.profile.username,
-  id: state.user.profile._id,
-  name: state.user.profile.name,
-  biography: state.user.profile.biography,
-  creationDate: state.user.profile.creationDate,
+  current: state.user.current,
+  profile: state.user.profile,
   tweets: state.user.tweets,
 });
 

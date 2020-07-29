@@ -11,7 +11,7 @@ import Infos from "../../components/HomeRight/Infos";
 
 function Account(props) {
   useEffect(() => {
-    document.title = `Twister | ${props.username}`;
+    document.title = `Twister | ${props.match.params.username}`;
   }, []);
 
   return (

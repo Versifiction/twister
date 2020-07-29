@@ -23,6 +23,7 @@ const corsOptions = {
   },
 };
 
+// route pour avoir tous les utilisateurs
 router.get("/getAll", cors(corsOptions), async function (req, res) {
   const users = await User.find({});
   res.send(users);
@@ -36,6 +37,7 @@ router.get("/user/:username", cors(corsOptions), async function (req, res) {
   res.send(user);
 });
 
+// route pour s'inscrire (page Inscription -> /inscription)
 router.post("/register", cors(corsOptions), async function (req, res) {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -101,6 +103,7 @@ router.post("/register", cors(corsOptions), async function (req, res) {
   };
 });
 
+// route pour se connecter (page Connexion -> /connexion)
 router.post("/login", cors(corsOptions), (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 

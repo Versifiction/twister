@@ -23,6 +23,7 @@
 
 .account-username {
   font-weight: #ccc;
+  color: #8899a6;
 }
 
 .account-edit {
@@ -42,4 +43,18 @@
 
 .AccountCenter {
   border: 1px solid white;
+}
+
+.account-following,
+.account-followers {
+  color: white;
+  margin-right: 10px;
+}
+
+.account-follows {
+  margin: 10px 0;
+}
+
+.bold {
+  font-weight: bold;
 }

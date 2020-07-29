@@ -32,3 +32,8 @@ textarea {
   display: flex;
   align-items: center;
 }
+
+.fa-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
