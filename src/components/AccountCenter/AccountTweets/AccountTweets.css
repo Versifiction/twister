@@ -33,3 +33,7 @@
 .AccountTweet-icon span {
   margin-left: 8px;
 }
+
+.fa-trash {
+  color: red;
+}

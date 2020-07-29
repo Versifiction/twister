@@ -1,6 +1,7 @@
 import isEmpty from "is-empty";
 
 import {
+  DELETE_USER_TWEET,
   GET_USER_INFO,
   GET_USER_TWEETS,
   LOGIN,
@@ -17,6 +18,11 @@ const initialState = {
 
 export default function user(state = initialState, action) {
   switch (action.type) {
+    case DELETE_USER_TWEET:
+      return {
+        ...state,
+        tweets: state.tweets.filter((t) => t._id !== action.payload),
+      };
     case GET_USER_INFO:
       return {
         ...state,

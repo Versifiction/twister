@@ -34,7 +34,6 @@ function Inscription(props) {
   }, [props]);
 
   useEffect(() => {
-    console.log("fields ", fields);
     if (props.errors) {
       setFields({ ...fields, errors: props.errors });
     }

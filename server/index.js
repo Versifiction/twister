@@ -65,7 +65,7 @@ app.get("/ping", function (req, res) {
 mongoose
   .connect(
     `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@ofilms-demo-f9iwz.mongodb.net/${process.env.DB}`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() =>
     app.listen(port, () =>

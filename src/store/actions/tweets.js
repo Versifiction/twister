@@ -7,7 +7,6 @@ import {
 } from "../constants/types";
 
 export const sendNewTweet = (tweet) => (dispatch) => {
-  console.log("tweet ", tweet);
   axios
     .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/new-tweet`, tweet)
     .then((res) => {

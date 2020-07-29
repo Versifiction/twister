@@ -5,7 +5,6 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER } from "../constants/types";
 
 export const registerUser = (userData) => (dispatch) => {
-  console.log(userData);
   axios
     .post(`${process.env.REACT_APP_SERVER_PORT}/api/users/register`, userData)
     .then((res) => (window.location.href = "/home"))
@@ -19,7 +18,6 @@ export const registerUser = (userData) => (dispatch) => {
 };
 
 export const loginUser = (userData) => (dispatch) => {
-  console.log(userData);
   axios
     .post(`${process.env.REACT_APP_SERVER_PORT}/api/users/login`, userData)
     .then((res) => {

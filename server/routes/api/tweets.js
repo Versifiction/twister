@@ -43,6 +43,12 @@ router.get("/:id", cors(corsOptions), async function (req, res) {
   res.send(tweets);
 });
 
+// route pour supprimer un de ses tweets
+router.delete("/delete/:id", cors(corsOptions), async function (req, res) {
+  const tweets = await Tweet.findByIdAndRemove({ _id: req.params.id });
+  res.send(tweets);
+});
+
 // route pour avoir les tweets des abonnements d'un utilisateur (page Home -> /home)
 router.get("/following/:id", cors(corsOptions), async function (req, res) {
   const tweets = await Tweet.find({ writerId: req.params.id }).sort({

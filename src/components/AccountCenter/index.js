@@ -15,7 +15,6 @@ function AccountCenter(props) {
   }, []);
 
   useEffect(() => {
-    console.log("profile ", props.profile);
     if (props.profile._id) {
       props.getUserTweets(props.profile._id);
     }
@@ -38,7 +37,7 @@ function AccountCenter(props) {
         />
       </div>
       <div className="account-header">
-        {props.username === props.current.username && (
+        {props.profile.username === props.current.username && (
           <div className="account-edit">
             <button
               type="submit"
@@ -72,11 +71,7 @@ function AccountCenter(props) {
           en {moment(props.profile.creationDate).format("MMMM YYYY")}
         </p>
       </div>
-      <AccountTweets
-        tweets={props.tweets}
-        username={props.profile.username}
-        name={props.profile.name}
-      />
+      <AccountTweets />
     </div>
   );
 }

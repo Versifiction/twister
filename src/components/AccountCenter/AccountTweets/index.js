@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import "moment/locale/fr";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { deleteUserTweet } from "../../../store/actions/user";
 
 import "./AccountTweets.css";
 
@@ -48,6 +51,15 @@ function AccountTweets(props) {
                   aria-hidden="true"
                 ></i>
               </div>
+              {props.profile.username === props.current.username && (
+                <div className="AccountTweet-icon">
+                  <i
+                    className="fa fa-trash"
+                    aria-hidden="true"
+                    onClick={() => props.deleteUserTweet(tweet._id)}
+                  ></i>
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -55,4 +67,18 @@ function AccountTweets(props) {
   );
 }
 
-export default AccountTweets;
+const mapStateToProps = (state) => ({
+  current: state.user.current,
+  profile: state.user.profile,
+  tweets: state.user.tweets,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      deleteUserTweet,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountTweets);
