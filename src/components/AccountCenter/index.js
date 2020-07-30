@@ -1,8 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
+import classnames from "classnames";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getUserInfo, getUserTweets } from "../../store/actions/user";
+import {
+  followUser,
+  getUserInfo,
+  getUserTweets,
+  unfollowUser,
+} from "../../store/actions/user";
 
 import "./AccountCenter.css";
 import placeholderPicture from "../../assets/placeholderPicture.png";
@@ -10,15 +16,32 @@ import placeholderBanner from "../../assets/placeholderBanner.png";
 import AccountTweets from "./AccountTweets";
 
 function AccountCenter(props) {
+  const [followed, setFollowed] = useState();
+
   useEffect(() => {
     props.getUserInfo(props.urlName);
+    // if (props.profile) {
+    //   console.log("1");
+    //   setFollowed(props.profile.followers.includes(props.current.id));
+    // }
   }, []);
 
   useEffect(() => {
     if (props.profile._id) {
       props.getUserTweets(props.profile._id);
+      setFollowed(props.profile.followers.includes(props.current.id));
     }
   }, [props.profile._id]);
+
+  function toggleFollowed() {
+    setFollowed(!followed);
+
+    if (!followed) {
+      props.followUser(props.current.id, props.profile._id);
+    } else {
+      props.unfollowUser(props.current.id, props.profile._id);
+    }
+  }
 
   return (
     <div className="AccountCenter">
@@ -37,7 +60,18 @@ function AccountCenter(props) {
         />
       </div>
       <div className="account-header">
-        {props.profile.username === props.current.username && (
+        {props.profile.username !== props.current.username ? (
+          <div className="account-follow">
+            <button
+              className={classnames("btn submit-button", {
+                "outline-btn": !followed,
+              })}
+              onClick={toggleFollowed}
+            >
+              {followed ? "Suivi" : "Suivre"}
+            </button>
+          </div>
+        ) : (
           <div className="account-edit">
             <button
               type="submit"
@@ -84,10 +118,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
-    {
-      getUserInfo,
-      getUserTweets,
-    },
+    { followUser, getUserInfo, getUserTweets, unfollowUser },
     dispatch
   );
 

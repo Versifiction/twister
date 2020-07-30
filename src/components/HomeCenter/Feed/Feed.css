@@ -1,4 +1,11 @@
 .Feed {
-  border: 1px solid white;
   width: 100%;
+}
+
+.Feed-Content {
+  border: 1px solid white;
+}
+
+.Feed-NoMessage {
+  text-align: center;
 }

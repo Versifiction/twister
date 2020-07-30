@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const isEmpty = require("is-empty");
 const keys = require("../../config/keys");
+const ObjectId = require("mongodb").ObjectId;
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // const validateResetPassword = require("../../validation/reset");
@@ -37,6 +38,42 @@ router.get("/user/:username", cors(corsOptions), async function (req, res) {
     { password: 0 }
   );
   res.send(user);
+});
+
+// route pour follow un utilisateur
+router.post("/user/follow/:id", cors(corsOptions), async function (req, res) {
+  const userToFollow = req.body.idToFollow;
+  const currentUser = req.params.id;
+
+  const user1 = await User.updateOne(
+    { _id: currentUser },
+    { $addToSet: { following: userToFollow } }
+  );
+
+  const user2 = await User.updateOne(
+    { _id: userToFollow },
+    { $addToSet: { followers: currentUser } }
+  );
+
+  res.send(user1);
+});
+
+// route pour unfollow un utilisateur
+router.post("/user/unfollow/:id", cors(corsOptions), async function (req, res) {
+  const userToUnfollow = req.body.idToUnfollow;
+  const currentUser = req.params.id;
+
+  const user1 = await User.updateOne(
+    { _id: currentUser },
+    { $pull: { following: userToUnfollow } }
+  );
+
+  const user2 = await User.updateOne(
+    { _id: userToUnfollow },
+    { $pull: { followers: currentUser } }
+  );
+
+  res.send(user1);
 });
 
 // route pour s'inscrire (page Inscription -> /inscription)

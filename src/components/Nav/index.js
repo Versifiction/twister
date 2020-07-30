@@ -21,7 +21,7 @@ function Nav(props) {
         </NavLink>
       </div>
       <div className="nav-right">
-        <Link href="/account" to="/account">
+        <Link href={`/user/${props.username}`} to={`/user/${props.username}`}>
           <i className="fa fa-user" aria-hidden="true"></i>
           <p className="nav-username">@{props.username}</p>
         </Link>

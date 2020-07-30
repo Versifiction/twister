@@ -21,6 +21,14 @@ a {
 .btn,
 .btn-large {
   background-color: #3aaae1 !important;
+  border-radius: 30px !important;
+}
+
+.outline-btn {
+  background-color: #15202b !important;
+  border-radius: 30px;
+  color: #3aaae1 !important;
+  border: 1px solid #3aaae1 !important;
 }
 
 input,

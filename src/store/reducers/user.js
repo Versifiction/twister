@@ -2,6 +2,7 @@ import isEmpty from "is-empty";
 
 import {
   DELETE_USER_TWEET,
+  FOLLOW_USER,
   GET_FEED_USER,
   GET_USER_INFO,
   GET_USER_TWEETS,
@@ -9,6 +10,7 @@ import {
   LOGOUT,
   SEND_NEW_TWEET,
   SET_CURRENT_USER,
+  UNFOLLOW_USER,
 } from "../constants/types";
 
 const initialState = {
@@ -24,6 +26,14 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         tweets: state.tweets.filter((t) => t._id !== action.payload),
+      };
+    case FOLLOW_USER:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          followers: [...state.profile.followers, action.payload],
+        },
       };
     case GET_FEED_USER:
       return {
@@ -49,6 +59,13 @@ export default function user(state = initialState, action) {
       return { ...state, isConnected: true };
     case LOGOUT:
       return { ...state, isConnected: false, current: {} };
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        profile: state.profile.followers.filter(
+          (t) => t._id !== action.payload
+        ),
+      };
     default:
       return state;
   }

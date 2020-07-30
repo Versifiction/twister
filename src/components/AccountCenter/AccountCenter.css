@@ -26,7 +26,8 @@
   color: #8899a6;
 }
 
-.account-edit {
+.account-edit,
+.account-follow {
   display: flex;
   justify-content: flex-end;
   margin: -70px 0 25px 0;

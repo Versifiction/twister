@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import moment from "moment";
+import classnames from "classnames";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getFeedUser } from "../../../store/actions/user";
+import { deleteUserTweet, getFeedUser } from "../../../store/actions/user";
 
 import "./Feed.css";
 
@@ -13,61 +14,68 @@ function Feed(props) {
 
   return (
     <div className="Feed">
-      {props.tweets &&
-        props.tweets.map((tweet) => (
-          <div className="AccountTweet" key={tweet._id}>
-            <span className="AccountTweet-name">{tweet.writerName}</span>
-            <span className="AccountTweet-username">
-              @{tweet.writerUsername}
-            </span>
-            <span className="AccountTweet-bullet">•</span>
-            <span className="AccountTweet-tweetedAt">
-              {moment(tweet.tweetedAt).locale("fr").calendar()}
-            </span>
-            <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
-            <div className="AccountTweet-icons">
-              <div className="AccountTweet-icon">
-                <i className="fa fa-reply" aria-hidden="true"></i>
-                {tweet.replies.length > 0 && (
-                  <span className="AccountTweet-replies">
-                    {tweet.replies.length}
-                  </span>
-                )}
-              </div>
-              <div className="AccountTweet-icon">
-                <i className="fa fa-retweet" aria-hidden="true"></i>
-                {tweet.retweets.length > 0 && (
-                  <span className="AccountTweet-retweets">
-                    {tweet.retweets.length}
-                  </span>
-                )}
-              </div>
-              <div className="AccountTweet-icon">
-                <i className="fa fa-heart" aria-hidden="true"></i>
-                {tweet.likes.length > 0 && (
-                  <span className="AccountTweet-likes">
-                    {tweet.likes.length}
-                  </span>
-                )}
-              </div>
-              <div className="AccountTweet-icon">
-                <i
-                  className="fa fa-share-alt fa-disabled"
-                  aria-hidden="true"
-                ></i>
-              </div>
-              {props.profile.username === props.current.username && (
+      {props.tweets.length === 0 && (
+        <p className="Feed-NoMessage">
+          Il n'y a pas encore de tweet dans votre fil d'actualité !
+        </p>
+      )}
+      <div className={classnames({ "Feed-Content": props.tweets.length > 0 })}>
+        {props.tweets &&
+          props.tweets.map((tweet) => (
+            <div className="AccountTweet" key={tweet._id}>
+              <span className="AccountTweet-name">{tweet.writerName}</span>
+              <span className="AccountTweet-username">
+                @{tweet.writerUsername}
+              </span>
+              <span className="AccountTweet-bullet">•</span>
+              <span className="AccountTweet-tweetedAt">
+                {moment(tweet.tweetedAt).locale("fr").calendar()}
+              </span>
+              <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
+              <div className="AccountTweet-icons">
+                <div className="AccountTweet-icon">
+                  <i className="fa fa-reply" aria-hidden="true"></i>
+                  {tweet.replies.length > 0 && (
+                    <span className="AccountTweet-replies">
+                      {tweet.replies.length}
+                    </span>
+                  )}
+                </div>
+                <div className="AccountTweet-icon">
+                  <i className="fa fa-retweet" aria-hidden="true"></i>
+                  {tweet.retweets.length > 0 && (
+                    <span className="AccountTweet-retweets">
+                      {tweet.retweets.length}
+                    </span>
+                  )}
+                </div>
+                <div className="AccountTweet-icon">
+                  <i className="fa fa-heart" aria-hidden="true"></i>
+                  {tweet.likes.length > 0 && (
+                    <span className="AccountTweet-likes">
+                      {tweet.likes.length}
+                    </span>
+                  )}
+                </div>
                 <div className="AccountTweet-icon">
                   <i
-                    className="fa fa-trash"
+                    className="fa fa-share-alt fa-disabled"
                     aria-hidden="true"
-                    onClick={() => props.deleteUserTweet(tweet._id)}
                   ></i>
                 </div>
-              )}
+                {tweet.writerUsername === props.current.username && (
+                  <div className="AccountTweet-icon">
+                    <i
+                      className="fa fa-trash"
+                      aria-hidden="true"
+                      onClick={() => props.deleteUserTweet(tweet._id)}
+                    ></i>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 }
@@ -79,11 +87,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      getFeedUser,
-    },
-    dispatch
-  );
+  bindActionCreators({ deleteUserTweet, getFeedUser }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

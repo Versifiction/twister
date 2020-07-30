@@ -2,10 +2,12 @@ import axios from "axios";
 
 import {
   DELETE_USER_TWEET,
+  FOLLOW_USER,
   GET_ERRORS,
   GET_FEED_USER,
   GET_USER_INFO,
   GET_USER_TWEETS,
+  UNFOLLOW_USER,
 } from "../constants/types";
 
 export const getUserInfo = (username) => (dispatch) => {
@@ -61,6 +63,40 @@ export const deleteUserTweet = (id) => (dispatch) => {
       dispatch({
         type: DELETE_USER_TWEET,
         payload: id,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const followUser = (currentUserId, idToFollow) => (dispatch) => {
+  axios
+    .post(
+      `${process.env.REACT_APP_SERVER_PORT}/api/users/user/follow/${currentUserId}`,
+      { idToFollow }
+    )
+    .then((res) => {
+      dispatch({
+        type: FOLLOW_USER,
+        payload: currentUserId,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const unfollowUser = (currentUserId, idToUnfollow) => (dispatch) => {
+  axios
+    .post(
+      `${process.env.REACT_APP_SERVER_PORT}/api/users/user/unfollow/${currentUserId}`,
+      { idToUnfollow }
+    )
+    .then((res) => {
+      dispatch({
+        type: UNFOLLOW_USER,
+        payload: currentUserId,
       });
     })
     .catch((err) => {

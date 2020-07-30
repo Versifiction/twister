@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import "moment/locale/fr";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteUserTweet } from "../../../store/actions/user";
@@ -13,10 +14,15 @@ function AccountTweets(props) {
       {props.tweets &&
         props.tweets.map((tweet) => (
           <div className="AccountTweet" key={tweet._id}>
-            <span className="AccountTweet-name">{props.profile.name}</span>
-            <span className="AccountTweet-username">
-              @{props.profile.username}
-            </span>
+            <Link
+              href={`/user/${props.profile.username}`}
+              to={`/user/${props.profile.username}`}
+            >
+              <span className="AccountTweet-name">{props.profile.name}</span>
+              <span className="AccountTweet-username">
+                @{props.profile.username}
+              </span>
+            </Link>
             <span className="AccountTweet-bullet">•</span>
             <span className="AccountTweet-tweetedAt">
               {moment(tweet.tweetedAt).locale("fr").calendar()}
