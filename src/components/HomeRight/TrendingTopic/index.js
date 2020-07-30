@@ -13,7 +13,7 @@ function TrendingTopic() {
         <span>Tendances : France</span>
       </div>
       {trends &&
-        trends.map((data) => (
+        trends.slice(0, 5).map((data) => (
           <div key={data.id} className="trending-topic-content padding">
             <div className="trending-topic-line">
               <span>{data.id}</span>

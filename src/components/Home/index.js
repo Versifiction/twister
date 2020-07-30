@@ -5,6 +5,7 @@ import Nav from "../Nav";
 import AccountNav from "../HomeLeft/AccountNav";
 import Feed from "../HomeCenter/Feed";
 import Searchbar from "../HomeRight/Searchbar";
+import Suggestions from "../HomeRight/Suggestions";
 import TrendingTopic from "../HomeRight/TrendingTopic";
 import Infos from "../HomeRight/Infos";
 
@@ -23,6 +24,7 @@ function Home() {
           <div className="col m12 l3">
             <Searchbar />
             <TrendingTopic />
+            <Suggestions />
             <Infos />
           </div>
         </div>

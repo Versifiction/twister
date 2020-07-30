@@ -6,6 +6,7 @@ import {
   GET_FEED_USER,
   GET_USER_INFO,
   GET_USER_TWEETS,
+  GET_SUGGESTIONS,
   LOGIN,
   LOGOUT,
   SEND_NEW_TWEET,
@@ -18,6 +19,7 @@ const initialState = {
   current: {},
   profile: {},
   tweets: [],
+  suggestions: [],
 };
 
 export default function user(state = initialState, action) {
@@ -40,6 +42,8 @@ export default function user(state = initialState, action) {
         ...state,
         tweets: action.payload,
       };
+    case GET_SUGGESTIONS:
+      return { ...state, suggestions: action.payload };
     case GET_USER_INFO:
       return {
         ...state,

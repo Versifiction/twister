@@ -5,6 +5,7 @@ import Nav from "../../components/Nav";
 import AccountNav from "../../components/HomeLeft/AccountNav";
 import Searchbar from "../../components/HomeRight/Searchbar";
 import TrendingTopic from "../../components/HomeRight/TrendingTopic";
+import Suggestions from "../../components/HomeRight/Suggestions";
 import Infos from "../../components/HomeRight/Infos";
 
 function Messages() {
@@ -24,6 +25,7 @@ function Messages() {
           <div className="col m12 l3">
             <Searchbar />
             <TrendingTopic />
+            <Suggestions />
             <Infos />
           </div>
         </div>

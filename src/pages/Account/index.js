@@ -7,6 +7,7 @@ import AccountNav from "../../components/HomeLeft/AccountNav";
 import AccountCenter from "../../components/AccountCenter";
 import Searchbar from "../../components/HomeRight/Searchbar";
 import TrendingTopic from "../../components/HomeRight/TrendingTopic";
+import Suggestions from "../../components/HomeRight/Suggestions";
 import Infos from "../../components/HomeRight/Infos";
 
 function Account(props) {
@@ -28,6 +29,7 @@ function Account(props) {
           <div className="col m12 l3">
             <Searchbar />
             <TrendingTopic />
+            <Suggestions />
             <Infos />
           </div>
         </div>

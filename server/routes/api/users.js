@@ -31,6 +31,12 @@ router.get("/getAll", cors(corsOptions), async function (req, res) {
   res.send(users);
 });
 
+// route pour avoir 3 utilisateurs au hasard
+router.get("/getRandom", cors(corsOptions), async function (req, res) {
+  const users = await User.aggregate([{ $sample: { size: 3 } }]);
+  res.send(users);
+});
+
 // route pour avoir les infos d'un utilisateur
 router.get("/user/:username", cors(corsOptions), async function (req, res) {
   const user = await User.find(

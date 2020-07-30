@@ -6,6 +6,7 @@ import AccountNav from "../../components/HomeLeft/AccountNav";
 import Searchbar from "../../components/HomeRight/Searchbar";
 import TrendingTopic from "../../components/HomeRight/TrendingTopic";
 import Infos from "../../components/HomeRight/Infos";
+import Suggestions from "../../components/HomeRight/Suggestions";
 
 function Explore() {
   useEffect(() => {
@@ -24,6 +25,7 @@ function Explore() {
           <div className="col m12 l3">
             <Searchbar />
             <TrendingTopic />
+            <Suggestions />
             <Infos />
           </div>
         </div>

@@ -2,6 +2,7 @@ export const DELETE_USER_TWEET = "DELETE_USER_TWEET";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const GET_ERRORS = "GET_ERRORS";
 export const GET_FEED_USER = "GET_FEED_USER";
+export const GET_SUGGESTIONS = "GET_SUGGESTIONS";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const GET_USER_TWEETS = "GET_USER_TWEETS";
 export const LOGIN = "LOGIN";

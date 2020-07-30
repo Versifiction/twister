@@ -5,6 +5,7 @@ import {
   FOLLOW_USER,
   GET_ERRORS,
   GET_FEED_USER,
+  GET_SUGGESTIONS,
   GET_USER_INFO,
   GET_USER_TWEETS,
   UNFOLLOW_USER,
@@ -97,6 +98,20 @@ export const unfollowUser = (currentUserId, idToUnfollow) => (dispatch) => {
       dispatch({
         type: UNFOLLOW_USER,
         payload: currentUserId,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const getSuggestions = () => (dispatch) => {
+  axios
+    .get(`${process.env.REACT_APP_SERVER_PORT}/api/users/getRandom`)
+    .then((res) => {
+      dispatch({
+        type: GET_SUGGESTIONS,
+        payload: res.data,
       });
     })
     .catch((err) => {
