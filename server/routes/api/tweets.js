@@ -70,4 +70,58 @@ router.get("/following/:id", cors(corsOptions), async function (req, res) {
   res.send(tweets);
 });
 
+// route pour likrt un tweet
+router.post("/like/:idtweet", cors(corsOptions), async function (req, res) {
+  const currentUser = req.body.idUser;
+  const idTweet = req.params.idtweet;
+
+  const user = await User.updateOne(
+    { _id: currentUser },
+    { $addToSet: { likes: idTweet } }
+  );
+
+  res.send(user);
+});
+
+// route pour retweeter un tweet
+router.post("/retweet/:idtweet", cors(corsOptions), async function (req, res) {
+  const currentUser = req.body.idUser;
+  const idTweet = req.params.idtweet;
+
+  const user = await User.updateOne(
+    { _id: currentUser },
+    { $addToSet: { retweets: idTweet } }
+  );
+
+  res.send(user);
+});
+
+// route pour déliker un tweet
+router.post("/unlike/:idtweet", cors(corsOptions), async function (req, res) {
+  const currentUser = req.body.idUser;
+  const idTweet = req.params.idtweet;
+
+  const user = await User.updateOne(
+    { _id: currentUser },
+    { $pull: { liked: idTweet } }
+  );
+
+  res.send(user);
+});
+
+// route pour déretweeter un tweet
+router.post("/unretweet/:idtweet", cors(corsOptions), async function (
+  req,
+  res
+) {
+  const currentUser = req.body.idUser;
+  const idTweet = req.params.idtweet;
+
+  const user = await User.updateOne(
+    { _id: currentUser },
+    { $pull: { retweets: idTweet } }
+  );
+
+  res.send(user);
+});
 module.exports = router;

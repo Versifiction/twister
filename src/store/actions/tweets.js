@@ -37,9 +37,12 @@ export const resetNewTweetInput = () => (dispatch) => {
   });
 };
 
-export const retweetTweet = (idUser, idTweet) => (dispatch) => {
+export const retweetTweet = (idTweet, idUser) => (dispatch) => {
   axios
-    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/retweet`, idUser)
+    .post(
+      `${process.env.REACT_APP_SERVER_PORT}/api/tweets/retweet/${idTweet}`,
+      { idUser }
+    )
     .then((res) => {
       dispatch({
         type: RETWEET_TWEET,
@@ -51,9 +54,12 @@ export const retweetTweet = (idUser, idTweet) => (dispatch) => {
     });
 };
 
-export const unretweetTweet = (idUser, idTweet) => (dispatch) => {
+export const unretweetTweet = (idTweet, idUser) => (dispatch) => {
   axios
-    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/unretweet`, idUser)
+    .post(
+      `${process.env.REACT_APP_SERVER_PORT}/api/tweets/unretweet/${idTweet}`,
+      { idUser }
+    )
     .then((res) => {
       dispatch({
         type: UNRETWEET_TWEET,
@@ -65,9 +71,11 @@ export const unretweetTweet = (idUser, idTweet) => (dispatch) => {
     });
 };
 
-export const likeTweet = (idUser, idTweet) => (dispatch) => {
+export const likeTweet = (idTweet, idUser) => (dispatch) => {
   axios
-    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/like`, idUser)
+    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/like/${idTweet}`, {
+      idUser,
+    })
     .then((res) => {
       dispatch({
         type: LIKE_TWEET,
@@ -79,9 +87,11 @@ export const likeTweet = (idUser, idTweet) => (dispatch) => {
     });
 };
 
-export const unlikeTweet = (idUser, idTweet) => (dispatch) => {
+export const unlikeTweet = (idTweet, idUser) => (dispatch) => {
   axios
-    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/unlike`, idUser)
+    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/unlike/${idTweet}`, {
+      idUser,
+    })
     .then((res) => {
       dispatch({
         type: UNLIKE_TWEET,

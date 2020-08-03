@@ -93,12 +93,18 @@ export default function user(state = initialState, action) {
     case UNLIKE_TWEET:
       return {
         ...state,
-        profile: state.profile.likes.filter((t) => t !== action.payload),
+        profile: {
+          ...state.profile,
+          retweets: state.profile.likes.filter((t) => t !== action.payload),
+        },
       };
     case UNRETWEET_TWEET:
       return {
         ...state,
-        profile: state.profile.retweets.filter((t) => t !== action.payload),
+        profile: {
+          ...state.profile,
+          retweets: state.profile.retweets.filter((t) => t !== action.payload),
+        },
       };
     default:
       return state;

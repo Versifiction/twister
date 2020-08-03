@@ -16,19 +16,19 @@ import {
 import "./AccountTweets.css";
 
 function AccountTweets(props) {
-  function toggleLike(idTweet) {
-    if (props.current.liked.includes(idTweet)) {
-      props.unlikeTweet();
+  function toggleLike(idTweet, idUser) {
+    if (props.profile.likes.includes(idTweet)) {
+      props.unlikeTweet(idTweet, idUser);
     } else {
-      props.likeTweet();
+      props.likeTweet(idTweet, idUser);
     }
   }
 
-  function toggleRetweet(idTweet) {
-    if (props.current.retweets.includes(idTweet)) {
-      props.unretweetTweet();
+  function toggleRetweet(idTweet, idUser) {
+    if (props.profile.retweets.includes(idTweet)) {
+      props.unretweetTweet(idTweet, idUser);
     } else {
-      props.retweetTweet();
+      props.retweetTweet(idTweet, idUser);
     }
   }
   return (
@@ -62,9 +62,9 @@ function AccountTweets(props) {
               <div className="AccountTweet-icon">
                 <i
                   className={classnames("fa fa-retweet", {
-                    retweeted: props.current.retweets.includes(tweet._id),
+                    retweeted: props.profile.retweets.includes(tweet._id),
                   })}
-                  onClick={() => toggleRetweet(tweet._id)}
+                  onClick={() => toggleRetweet(tweet._id, props.current.id)}
                   aria-hidden="true"
                 ></i>
                 {tweet.retweets.length > 0 && (
@@ -76,9 +76,9 @@ function AccountTweets(props) {
               <div className="AccountTweet-icon">
                 <i
                   className={classnames("fa fa-heart", {
-                    liked: props.current.likes.includes(tweet._id),
+                    liked: props.profile.likes.includes(tweet._id),
                   })}
-                  onClick={() => toggleLike(tweet._id)}
+                  onClick={() => toggleLike(tweet._id, props.current.id)}
                   aria-hidden="true"
                 ></i>
                 {tweet.likes.length > 0 && (
