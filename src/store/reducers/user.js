@@ -7,11 +7,15 @@ import {
   GET_USER_INFO,
   GET_USER_TWEETS,
   GET_SUGGESTIONS,
+  LIKE_TWEET,
   LOGIN,
   LOGOUT,
+  RETWEET_TWEET,
   SEND_NEW_TWEET,
   SET_CURRENT_USER,
   UNFOLLOW_USER,
+  UNLIKE_TWEET,
+  UNRETWEET_TWEET,
 } from "../constants/types";
 
 const initialState = {
@@ -59,16 +63,42 @@ export default function user(state = initialState, action) {
         isConnected: !isEmpty(action.payload),
         current: action.payload,
       };
+    case LIKE_TWEET:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          likes: [...state.profile.likes, action.payload],
+        },
+      };
     case LOGIN:
       return { ...state, isConnected: true };
     case LOGOUT:
       return { ...state, isConnected: false, current: {} };
+    case RETWEET_TWEET:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          retweets: [...state.profile.retweets, action.payload],
+        },
+      };
     case UNFOLLOW_USER:
       return {
         ...state,
         profile: state.profile.followers.filter(
           (t) => t._id !== action.payload
         ),
+      };
+    case UNLIKE_TWEET:
+      return {
+        ...state,
+        profile: state.profile.likes.filter((t) => t !== action.payload),
+      };
+    case UNRETWEET_TWEET:
+      return {
+        ...state,
+        profile: state.profile.retweets.filter((t) => t !== action.payload),
       };
     default:
       return state;

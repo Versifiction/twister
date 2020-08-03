@@ -1,5 +1,6 @@
 .AccountTweet {
   padding: 10px;
+  border-top: 1px solid white;
 }
 
 .AccountTweet-name,
@@ -33,6 +34,11 @@
   margin-left: 8px;
 }
 
-.fa-trash {
+.fa-trash,
+.liked {
   color: red;
+}
+
+.retweeted {
+  color: green;
 }
