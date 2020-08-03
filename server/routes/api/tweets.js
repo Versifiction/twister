@@ -80,6 +80,11 @@ router.post("/like/:idtweet", cors(corsOptions), async function (req, res) {
     { $addToSet: { likes: idTweet } }
   );
 
+  const tweet = await Tweet.updateOne(
+    { _id: idTweet },
+    { $addToSet: { likes: currentUser } }
+  );
+
   res.send(user);
 });
 
@@ -93,6 +98,11 @@ router.post("/retweet/:idtweet", cors(corsOptions), async function (req, res) {
     { $addToSet: { retweets: idTweet } }
   );
 
+  const tweet = await Tweet.updateOne(
+    { _id: idTweet },
+    { $addToSet: { retweets: currentUser } }
+  );
+
   res.send(user);
 });
 
@@ -103,7 +113,12 @@ router.post("/unlike/:idtweet", cors(corsOptions), async function (req, res) {
 
   const user = await User.updateOne(
     { _id: currentUser },
-    { $pull: { liked: idTweet } }
+    { $pull: { likes: idTweet } }
+  );
+
+  const tweet = await Tweet.updateOne(
+    { _id: idTweet },
+    { $pull: { likes: currentUser } }
   );
 
   res.send(user);
@@ -120,6 +135,11 @@ router.post("/unretweet/:idtweet", cors(corsOptions), async function (
   const user = await User.updateOne(
     { _id: currentUser },
     { $pull: { retweets: idTweet } }
+  );
+
+  const tweet = await Tweet.updateOne(
+    { _id: idTweet },
+    { $pull: { retweets: currentUser } }
   );
 
   res.send(user);

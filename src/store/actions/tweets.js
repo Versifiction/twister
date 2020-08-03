@@ -46,7 +46,8 @@ export const retweetTweet = (idTweet, idUser) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: RETWEET_TWEET,
-        payload: idTweet,
+        idTweet,
+        idUser,
       });
     })
     .catch((err) => {
@@ -63,7 +64,8 @@ export const unretweetTweet = (idTweet, idUser) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UNRETWEET_TWEET,
-        payload: idTweet,
+        idTweet,
+        idUser,
       });
     })
     .catch((err) => {
@@ -79,7 +81,8 @@ export const likeTweet = (idTweet, idUser) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: LIKE_TWEET,
-        payload: idTweet,
+        idTweet,
+        idUser,
       });
     })
     .catch((err) => {
@@ -95,7 +98,8 @@ export const unlikeTweet = (idTweet, idUser) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UNLIKE_TWEET,
-        payload: idTweet,
+        idTweet,
+        idUser,
       });
     })
     .catch((err) => {

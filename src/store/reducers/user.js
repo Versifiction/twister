@@ -64,11 +64,14 @@ export default function user(state = initialState, action) {
         current: action.payload,
       };
     case LIKE_TWEET:
+      state.tweets
+        .filter((t) => t._id === action.idTweet)[0]
+        .likes.push(action.idUser);
       return {
         ...state,
         profile: {
           ...state.profile,
-          likes: [...state.profile.likes, action.payload],
+          likes: [...state.profile.likes, action.idTweet],
         },
       };
     case LOGIN:
@@ -76,11 +79,14 @@ export default function user(state = initialState, action) {
     case LOGOUT:
       return { ...state, isConnected: false, current: {} };
     case RETWEET_TWEET:
+      state.tweets
+        .filter((t) => t._id === action.idTweet)[0]
+        .retweets.push(action.idUser);
       return {
         ...state,
         profile: {
           ...state.profile,
-          retweets: [...state.profile.retweets, action.payload],
+          retweets: [...state.profile.retweets, action.idTweet],
         },
       };
     case UNFOLLOW_USER:
@@ -91,19 +97,25 @@ export default function user(state = initialState, action) {
         ),
       };
     case UNLIKE_TWEET:
+      state.tweets
+        .filter((t) => t._id === action.idTweet)[0]
+        .likes.splice(action.idUser, 1);
       return {
         ...state,
         profile: {
           ...state.profile,
-          retweets: state.profile.likes.filter((t) => t !== action.payload),
+          likes: state.profile.likes.filter((t) => t !== action.idTweet),
         },
       };
     case UNRETWEET_TWEET:
+      state.tweets
+        .filter((t) => t._id === action.idTweet)[0]
+        .retweets.splice(action.idUser, 1);
       return {
         ...state,
         profile: {
           ...state.profile,
-          retweets: state.profile.retweets.filter((t) => t !== action.payload),
+          retweets: state.profile.retweets.filter((t) => t !== action.idTweet),
         },
       };
     default:

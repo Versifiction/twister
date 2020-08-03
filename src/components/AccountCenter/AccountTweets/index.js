@@ -17,7 +17,9 @@ import "./AccountTweets.css";
 
 function AccountTweets(props) {
   function toggleLike(idTweet, idUser) {
-    if (props.profile.likes.includes(idTweet)) {
+    if (
+      props.tweets.filter((t) => t._id === idTweet)[0].likes.includes(idUser)
+    ) {
       props.unlikeTweet(idTweet, idUser);
     } else {
       props.likeTweet(idTweet, idUser);
@@ -25,7 +27,9 @@ function AccountTweets(props) {
   }
 
   function toggleRetweet(idTweet, idUser) {
-    if (props.profile.retweets.includes(idTweet)) {
+    if (
+      props.tweets.filter((t) => t._id === idTweet)[0].retweets.includes(idUser)
+    ) {
       props.unretweetTweet(idTweet, idUser);
     } else {
       props.retweetTweet(idTweet, idUser);
@@ -62,13 +66,17 @@ function AccountTweets(props) {
               <div className="AccountTweet-icon">
                 <i
                   className={classnames("fa fa-retweet", {
-                    retweeted: props.profile.retweets.includes(tweet._id),
+                    retweeted: tweet.retweets.includes(props.current.id),
                   })}
                   onClick={() => toggleRetweet(tweet._id, props.current.id)}
                   aria-hidden="true"
                 ></i>
                 {tweet.retweets.length > 0 && (
-                  <span className="AccountTweet-retweets">
+                  <span
+                    className={classnames("AccountTweet-retweets", {
+                      retweeted: tweet.retweets.includes(props.current.id),
+                    })}
+                  >
                     {tweet.retweets.length}
                   </span>
                 )}
@@ -76,13 +84,17 @@ function AccountTweets(props) {
               <div className="AccountTweet-icon">
                 <i
                   className={classnames("fa fa-heart", {
-                    liked: props.profile.likes.includes(tweet._id),
+                    liked: tweet.likes.includes(props.current.id),
                   })}
                   onClick={() => toggleLike(tweet._id, props.current.id)}
                   aria-hidden="true"
                 ></i>
                 {tweet.likes.length > 0 && (
-                  <span className="AccountTweet-likes">
+                  <span
+                    className={classnames("AccountTweet-likes", {
+                      liked: tweet.likes.includes(props.current.id),
+                    })}
+                  >
                     {tweet.likes.length}
                   </span>
                 )}
