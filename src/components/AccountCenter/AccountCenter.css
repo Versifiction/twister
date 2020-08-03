@@ -3,6 +3,10 @@
   height: 200px;
 }
 
+.account-header {
+  border-bottom: 1px solid white;
+}
+
 .profile-img-container {
   height: 130px;
   margin: -65px 0 15px 20px;
@@ -24,6 +28,7 @@
 .account-username {
   font-weight: #ccc;
   color: #8899a6;
+  display: inline;
 }
 
 .account-edit,
@@ -40,6 +45,11 @@
 .fa-calendar {
   color: #3aaae1;
   margin-right: 4px;
+}
+
+.fa-check-circle {
+  color: #3aaae1;
+  margin-left: 4px;
 }
 
 .AccountCenter {

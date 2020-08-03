@@ -17,21 +17,26 @@ import AccountTweets from "./AccountTweets";
 
 function AccountCenter(props) {
   const [followed, setFollowed] = useState();
+  const [editable, setEditable] = useState(false);
 
   useEffect(() => {
     props.getUserInfo(props.urlName);
-    // if (props.profile) {
-    //   console.log("1");
-    //   setFollowed(props.profile.followers.includes(props.current.id));
-    // }
-  }, []);
+  }, [props.urlName]);
 
   useEffect(() => {
     if (props.profile._id) {
       props.getUserTweets(props.profile._id);
       setFollowed(props.profile.followers.includes(props.current.id));
     }
-  }, [props.profile._id]);
+  }, [props.profile._id, props.urlName]);
+
+  function handleChange(e) {
+    console.log("e t v", e.target.value);
+  }
+
+  function toggleEditable() {
+    setEditable(!editable);
+  }
 
   function toggleFollowed() {
     setFollowed(!followed);
@@ -73,37 +78,95 @@ function AccountCenter(props) {
           </div>
         ) : (
           <div className="account-edit">
-            <button
-              type="submit"
-              className="btn submit-button"
-              value="Me connecter"
-            >
-              Éditer le profil
-            </button>
+            {editable ? (
+              <>
+                <button
+                  type="submit"
+                  className="btn outline-btn submit-button"
+                  onClick={toggleEditable}
+                >
+                  Annuler
+                </button>{" "}
+                <button
+                  type="submit"
+                  className="btn submit-button"
+                  onClick={toggleEditable}
+                >
+                  Sauvegarder
+                </button>
+              </>
+            ) : (
+              <button
+                type="submit"
+                className="btn submit-button"
+                onClick={toggleEditable}
+              >
+                Éditer le profil
+              </button>
+            )}
           </div>
         )}
-        <p className="account-name">{props.profile.name}</p>
-        <p className="account-username">@{props.profile.username}</p>
-        <div className="account-follows">
-          {props.profile.following && (
-            <span className="account-following">
-              <span className="bold">{props.profile.following.length}</span>{" "}
-              abonnements
-            </span>
-          )}
-          &nbsp;
-          {props.profile.followers && (
-            <span className="account-followers">
-              <span className="bold">{props.profile.followers.length}</span>{" "}
-              abonnés
-            </span>
-          )}
-        </div>
-        {props.profile.biography && <p>{props.profile.biography}</p>}
-        <p>
-          <i className="fa fa-calendar" aria-hidden="true"></i>A rejoint Twister
-          en {moment(props.profile.creationDate).format("MMMM YYYY")}
-        </p>
+        {editable ? (
+          <>
+            <div className="input-field col s12">
+              <input
+                placeholder="Nom"
+                id="name"
+                onChange={(e) => handleChange(e)}
+                type="text"
+                name="name"
+                className="validate"
+                value={props.current.name}
+              />
+              {/* <span className="red-text">{fields.errors.password}</span> */}
+            </div>
+            <div className="input-field col s12">
+              <input
+                placeholder="Biographie"
+                id="biography"
+                onChange={(e) => handleChange(e)}
+                type="text"
+                name="biography"
+                className="validate"
+                value={props.current.biography}
+              />
+              {/* <span className="red-text">{fields.errors.password}</span> */}
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="account-name">{props.profile.name}</p>
+            <p className="account-username">@{props.profile.username}</p>
+            {props.profile.verified && (
+              <i
+                className="fa fa-check-circle"
+                aria-hidden="true"
+                alt="Vérifié"
+              ></i>
+            )}
+            <div className="account-follows">
+              {props.profile.following && (
+                <span className="account-following">
+                  <span className="bold">{props.profile.following.length}</span>{" "}
+                  abonnements
+                </span>
+              )}
+              &nbsp;
+              {props.profile.followers && (
+                <span className="account-followers">
+                  <span className="bold">{props.profile.followers.length}</span>{" "}
+                  abonnés
+                </span>
+              )}
+            </div>
+            {props.profile.biography && <p>{props.profile.biography}</p>}
+            <p>
+              <i className="fa fa-calendar" aria-hidden="true"></i>A rejoint
+              Twister en{" "}
+              {moment(props.profile.creationDate).format("MMMM YYYY")}
+            </p>
+          </>
+        )}
       </div>
       <AccountTweets />
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -20,8 +21,13 @@ function Suggestions(props) {
         props.suggestions.slice(0, 5).map((data) => (
           <div key={data._id} className="trending-topic-content padding">
             <div className="trending-topic-line">
-              <span className="AccountTweet-name">{data.name}</span>
-              <span className="AccountTweet-username">@{data.username}</span>
+              <Link
+                href={`/user/${data.username}`}
+                to={`/user/${data.username}`}
+              >
+                <span className="AccountTweet-name">{data.name}</span>
+                <span className="AccountTweet-username">@{data.username}</span>
+              </Link>
             </div>
             <div className="trending-topic-libelle">
               <p>{data.biography}</p>
