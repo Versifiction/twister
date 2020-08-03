@@ -4,6 +4,7 @@ import "./Settings.css";
 import Nav from "../../components/Nav";
 import AccountNav from "../../components/HomeLeft/AccountNav";
 import Searchbar from "../../components/HomeRight/Searchbar";
+import SettingsContent from "../../components/SettingsContent";
 import TrendingTopic from "../../components/HomeRight/TrendingTopic";
 import Infos from "../../components/HomeRight/Infos";
 
@@ -20,7 +21,9 @@ function Settings() {
           <div className="col m12 l3">
             <AccountNav />
           </div>
-          <div className="col m12 l6 centered"></div>
+          <div className="col m12 l6">
+            <SettingsContent />
+          </div>
           <div className="col m12 l3">
             <Searchbar />
             <TrendingTopic />

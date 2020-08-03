@@ -106,3 +106,16 @@ export const unlikeTweet = (idTweet, idUser) => (dispatch) => {
       console.log("err ", err);
     });
 };
+
+export const toggleProtectedTweets = (idUser, isProtected) => (dispatch) => {
+  console.log(idUser, isProtected);
+  axios
+    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/protected`, {
+      idUser,
+      isProtected,
+    })
+    .then((res) => {})
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};

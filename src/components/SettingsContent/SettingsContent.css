@@ -1,0 +1,4 @@
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
+  border: 2px solid #3aaae1;
+  background-color: #3aaae1;
+}

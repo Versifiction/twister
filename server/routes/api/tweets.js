@@ -144,4 +144,18 @@ router.post("/unretweet/:idtweet", cors(corsOptions), async function (
 
   res.send(user);
 });
+
+// route pour déretweeter un tweet
+router.post("/protected", cors(corsOptions), async function (req, res) {
+  const currentUser = req.body.idUser;
+  const isProtected = req.body.isProtected;
+
+  const user = await User.updateOne(
+    { _id: currentUser },
+    { protected: isProtected }
+  );
+
+  res.send(user);
+});
+
 module.exports = router;
