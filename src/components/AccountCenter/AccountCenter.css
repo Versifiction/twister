@@ -69,3 +69,17 @@
 .bold {
   font-weight: bold;
 }
+
+.protected-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.protected-title {
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+
+.protected-text {
+  color: #8899a6;
+}

@@ -168,7 +168,18 @@ function AccountCenter(props) {
           </>
         )}
       </div>
-      <AccountTweets />
+      {props.profile.protected &&
+      !props.profile.following.includes(props.current.id) ? (
+        <div className="protected-content">
+          <p className="protected-title">Ces tweets sont protégés</p>
+          <p className="protected-text">
+            L'utilisateur a protégé ses tweets. Seuls les personnes auxquelles
+            il est abonné peuvent voir ses tweets.
+          </p>
+        </div>
+      ) : (
+        <AccountTweets />
+      )}
     </div>
   );
 }
