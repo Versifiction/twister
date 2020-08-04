@@ -91,12 +91,8 @@ export default function user(state = initialState, action) {
         },
       };
     case UNFOLLOW_USER:
-      return {
-        ...state,
-        profile: state.profile.followers.filter(
-          (t) => t._id !== action.payload
-        ),
-      };
+      state.profile.followers.filter((t) => t._id !== action.payload);
+      return state;
     case UNLIKE_TWEET:
       const indexLike = state.tweets
         .filter((t) => t._id === action.idTweet)[0]
