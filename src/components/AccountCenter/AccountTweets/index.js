@@ -42,12 +42,12 @@ function AccountTweets(props) {
         props.tweets.map((tweet) => (
           <div className="AccountTweet" key={tweet._id}>
             <Link
-              href={`/user/${props.profile.username}`}
-              to={`/user/${props.profile.username}`}
+              href={`/user/${tweet.writerUsername}`}
+              to={`/user/${tweet.writerUsername}`}
             >
-              <span className="AccountTweet-name">{props.profile.name}</span>
+              <span className="AccountTweet-name">{tweet.writerName}</span>
               <span className="AccountTweet-username">
-                @{props.profile.username}
+                @{tweet.writerUsername}
               </span>
             </Link>
             <span className="AccountTweet-bullet">•</span>

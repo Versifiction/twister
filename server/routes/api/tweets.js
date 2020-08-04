@@ -38,12 +38,32 @@ router.post("/new-tweet", cors(corsOptions), async function (req, res) {
     .catch((err) => console.log(err));
 });
 
-// route pour avoir les tweets d'un utilisateur (page Account -> /user/:user)
+// route pour avoir les tweets d'un utilisateur + ses retweets (page Account -> /user/:user)
 router.get("/:id", cors(corsOptions), async function (req, res) {
-  const tweets = await Tweet.find({ writerId: req.params.id }).sort({
+  const userTweets = await Tweet.find({ writerId: req.params.id }).sort({
     tweetedAt: -1,
   });
-  res.send(tweets);
+
+  const userRt = await User.find({ _id: req.params.id }, { retweets: 1 });
+
+  const userRetweets = await Tweet.find({
+    _id: { $in: userRt[0].retweets },
+  }).sort({
+    tweetedAt: -1,
+  });
+
+  const userTweetsAndRetweets = userTweets.concat(userRetweets);
+
+  const sortedUserTweetsAndRetweets = userTweetsAndRetweets.sort((a, b) => {
+    const dateA = new Date(a.tweetedAt);
+    const dateB = new Date(b.tweetedAt);
+    return dateA - dateB;
+  });
+
+  console.log("u t", userTweetsAndRetweets);
+  console.log("u t sorted", sortedUserTweetsAndRetweets);
+
+  res.send(userTweetsAndRetweets.reverse());
 });
 
 // route pour supprimer un de ses tweets

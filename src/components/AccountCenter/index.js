@@ -107,7 +107,7 @@ function AccountCenter(props) {
           </div>
         )}
         {editable ? (
-          <>
+          <div className="row">
             <div className="input-field col s12">
               <input
                 placeholder="Nom"
@@ -132,7 +132,7 @@ function AccountCenter(props) {
               />
               {/* <span className="red-text">{fields.errors.password}</span> */}
             </div>
-          </>
+          </div>
         ) : (
           <>
             <p className="account-name">{props.profile.name}</p>

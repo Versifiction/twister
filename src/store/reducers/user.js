@@ -82,6 +82,7 @@ export default function user(state = initialState, action) {
       state.tweets
         .filter((t) => t._id === action.idTweet)[0]
         .retweets.push(action.idUser);
+
       return {
         ...state,
         profile: {
@@ -119,12 +120,14 @@ export default function user(state = initialState, action) {
       state.tweets
         .filter((t) => t._id === action.idTweet)[0]
         .retweets.splice(indexRt, 1);
+
       return {
         ...state,
         profile: {
           ...state.profile,
           retweets: state.profile.retweets.filter((t) => t !== action.idTweet),
         },
+        tweets: state.tweets.filter((t) => t._id !== action.idTweet),
       };
     default:
       return state;
