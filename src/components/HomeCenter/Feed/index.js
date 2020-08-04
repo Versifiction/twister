@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import moment from "moment";
 import classnames from "classnames";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteUserTweet, getFeedUser } from "../../../store/actions/user";
@@ -23,10 +24,15 @@ function Feed(props) {
         {props.tweets &&
           props.tweets.map((tweet) => (
             <div className="AccountTweet" key={tweet._id}>
-              <span className="AccountTweet-name">{tweet.writerName}</span>
-              <span className="AccountTweet-username">
-                @{tweet.writerUsername}
-              </span>
+              <Link
+                href={`/user/${tweet.writerUsername}`}
+                to={`/user/${tweet.writerUsername}`}
+              >
+                <span className="AccountTweet-name">{tweet.writerName}</span>
+                <span className="AccountTweet-username">
+                  @{tweet.writerUsername}
+                </span>
+              </Link>
               <span className="AccountTweet-bullet">•</span>
               <span className="AccountTweet-tweetedAt">
                 {moment(tweet.tweetedAt).locale("fr").calendar()}
