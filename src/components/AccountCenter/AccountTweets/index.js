@@ -35,6 +35,7 @@ function AccountTweets(props) {
       props.retweetTweet(idTweet, idUser);
     }
   }
+
   return (
     <div className="AccountTweets">
       {props.tweets &&

@@ -18,11 +18,11 @@ function Explore() {
       <div className="container">
         <Nav title="Explorer" />
         <div className="row">
-          <div className="col m12 l3">
+          <div className="col s12 l3">
             <AccountNav />
           </div>
-          <div className="col m12 l6 centered"></div>
-          <div className="col m12 l3">
+          <div className="col s12 l6 centered"></div>
+          <div className="col s12 l3">
             <Searchbar />
             <TrendingTopic />
             <Suggestions />

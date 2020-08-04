@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteUserTweet, getFeedUser } from "../../../store/actions/user";
+import {
+  retweetTweet,
+  likeTweet,
+  unretweetTweet,
+  unlikeTweet,
+} from "../../../store/actions/tweets";
 
 import "./Feed.css";
 
@@ -12,6 +18,26 @@ function Feed(props) {
   useEffect(() => {
     props.getFeedUser(props.current.id);
   }, []);
+
+  function toggleLike(idTweet, idUser) {
+    if (
+      props.tweets.filter((t) => t._id === idTweet)[0].likes.includes(idUser)
+    ) {
+      props.unlikeTweet(idTweet, idUser);
+    } else {
+      props.likeTweet(idTweet, idUser);
+    }
+  }
+
+  function toggleRetweet(idTweet, idUser) {
+    if (
+      props.tweets.filter((t) => t._id === idTweet)[0].retweets.includes(idUser)
+    ) {
+      props.unretweetTweet(idTweet, idUser);
+    } else {
+      props.retweetTweet(idTweet, idUser);
+    }
+  }
 
   return (
     <div className="Feed">
@@ -48,17 +74,37 @@ function Feed(props) {
                   )}
                 </div>
                 <div className="AccountTweet-icon">
-                  <i className="fa fa-retweet" aria-hidden="true"></i>
+                  <i
+                    className={classnames("fa fa-retweet", {
+                      retweeted: tweet.retweets.includes(props.current.id),
+                    })}
+                    aria-hidden="true"
+                    onClick={() => toggleRetweet(tweet._id, props.current.id)}
+                  ></i>
                   {tweet.retweets.length > 0 && (
-                    <span className="AccountTweet-retweets">
+                    <span
+                      className={classnames("AccountTweet-retweets", {
+                        retweeted: tweet.retweets.includes(props.current.id),
+                      })}
+                    >
                       {tweet.retweets.length}
                     </span>
                   )}
                 </div>
                 <div className="AccountTweet-icon">
-                  <i className="fa fa-heart" aria-hidden="true"></i>
+                  <i
+                    className={classnames("fa fa-heart", {
+                      liked: tweet.likes.includes(props.current.id),
+                    })}
+                    aria-hidden="true"
+                    onClick={() => toggleLike(tweet._id, props.current.id)}
+                  ></i>
                   {tweet.likes.length > 0 && (
-                    <span className="AccountTweet-likes">
+                    <span
+                      className={classnames("AccountTweet-likes", {
+                        liked: tweet.likes.includes(props.current.id),
+                      })}
+                    >
                       {tweet.likes.length}
                     </span>
                   )}
@@ -93,6 +139,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ deleteUserTweet, getFeedUser }, dispatch);
+  bindActionCreators(
+    {
+      deleteUserTweet,
+      getFeedUser,
+      retweetTweet,
+      likeTweet,
+      unretweetTweet,
+      unlikeTweet,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

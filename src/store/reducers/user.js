@@ -97,9 +97,13 @@ export default function user(state = initialState, action) {
         ),
       };
     case UNLIKE_TWEET:
+      const indexLike = state.tweets
+        .filter((t) => t._id === action.idTweet)[0]
+        .likes.indexOf(action.idUser);
+
       state.tweets
         .filter((t) => t._id === action.idTweet)[0]
-        .likes.splice(action.idUser, 1);
+        .likes.splice(indexLike, 1);
       return {
         ...state,
         profile: {
@@ -108,9 +112,13 @@ export default function user(state = initialState, action) {
         },
       };
     case UNRETWEET_TWEET:
+      const indexRt = state.tweets
+        .filter((t) => t._id === action.idTweet)[0]
+        .retweets.indexOf(action.idUser);
+
       state.tweets
         .filter((t) => t._id === action.idTweet)[0]
-        .retweets.splice(action.idUser, 1);
+        .retweets.splice(indexRt, 1);
       return {
         ...state,
         profile: {
