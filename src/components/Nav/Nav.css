@@ -42,6 +42,8 @@
 .nav-right {
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .nav-username,
@@ -49,4 +51,16 @@
   display: inline;
   margin-right: 4px;
   color: #3aaae1;
+}
+
+.nav-link {
+  flex: 1;
+  display: flex;
+}
+
+.nav-title {
+  color: #3aaae1;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
 }

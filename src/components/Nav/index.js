@@ -10,7 +10,7 @@ import twitterLogoSVG from "../../assets/twitter-logo.png";
 function Nav(props) {
   return (
     <div className="Nav flex main-nav centered">
-      <div>
+      <div className="nav-link">
         <NavLink
           className="root-link"
           activeClassName="active"
@@ -20,6 +20,7 @@ function Nav(props) {
           <img src={twitterLogoSVG} className="logo" alt="Logo twitter" />
         </NavLink>
       </div>
+      <div className="nav-title">{props.title}</div>
       <div className="nav-right">
         <Link href={`/user/${props.username}`} to={`/user/${props.username}`}>
           <i className="fa fa-user" aria-hidden="true"></i>

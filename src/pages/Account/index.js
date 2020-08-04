@@ -18,7 +18,7 @@ function Account(props) {
   return (
     <div className="Home">
       <div className="container">
-        <Nav />
+        <Nav title={props.match.params.username} />
         <div className="row">
           <div className="col m12 l3">
             <AccountNav />

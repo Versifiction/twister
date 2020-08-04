@@ -16,7 +16,7 @@ function Explore() {
   return (
     <div className="Home">
       <div className="container">
-        <Nav />
+        <Nav title="Explorer" />
         <div className="row">
           <div className="col m12 l3">
             <AccountNav />

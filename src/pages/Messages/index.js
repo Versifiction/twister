@@ -16,7 +16,7 @@ function Messages() {
   return (
     <div className="Home">
       <div className="container">
-        <Nav />
+        <Nav title="Messages" />
         <div className="row">
           <div className="col m12 l3">
             <AccountNav />

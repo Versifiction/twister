@@ -13,7 +13,7 @@ function Home() {
   return (
     <div className="Home">
       <div className="container">
-        <Nav />
+        <Nav title="Accueil" />
         <div className="row">
           <div className="col m12 l3">
             <AccountNav />

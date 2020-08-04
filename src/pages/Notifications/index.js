@@ -15,7 +15,7 @@ function Notifications() {
   return (
     <div className="Home">
       <div className="container">
-        <Nav />
+        <Nav title="Notifications" />
         <div className="row">
           <div className="col m12 l3">
             <AccountNav />
