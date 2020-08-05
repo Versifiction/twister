@@ -2,6 +2,7 @@ import isEmpty from "is-empty";
 
 import {
   DELETE_USER_TWEET,
+  EDIT_BIO_AND_NAME,
   FOLLOW_USER,
   GET_FEED_USER,
   GET_USER_INFO,
@@ -32,6 +33,15 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         tweets: state.tweets.filter((t) => t._id !== action.payload),
+      };
+    case EDIT_BIO_AND_NAME:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          biography: action.payload.biography,
+          name: action.payload.name,
+        },
       };
     case FOLLOW_USER:
       return {
@@ -92,6 +102,7 @@ export default function user(state = initialState, action) {
       };
     case UNFOLLOW_USER:
       state.profile.followers.filter((t) => t._id !== action.payload);
+
       return {
         ...state,
         profile: {
@@ -117,6 +128,8 @@ export default function user(state = initialState, action) {
         },
       };
     case UNRETWEET_TWEET:
+      console.log("state current ", state.current.id);
+      console.log("state profile ", state.profile._id);
       const indexRt = state.tweets
         .filter((t) => t._id === action.idTweet)[0]
         .retweets.indexOf(action.idUser);
@@ -131,7 +144,10 @@ export default function user(state = initialState, action) {
           ...state.profile,
           retweets: state.profile.retweets.filter((t) => t !== action.idTweet),
         },
-        tweets: state.tweets.filter((t) => t._id !== action.idTweet),
+        tweets:
+          state.profile._id === state.current.id
+            ? state.tweets.filter((t) => t._id !== action.idTweet)
+            : state.tweets,
       };
     default:
       return state;

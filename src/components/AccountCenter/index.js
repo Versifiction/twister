@@ -8,6 +8,7 @@ import {
   getUserInfo,
   getUserTweets,
   unfollowUser,
+  editBioAndName,
 } from "../../store/actions/user";
 
 import "./AccountCenter.css";
@@ -18,6 +19,8 @@ import AccountTweets from "./AccountTweets";
 function AccountCenter(props) {
   const [followed, setFollowed] = useState();
   const [editable, setEditable] = useState(false);
+  const [name, setName] = useState();
+  const [biography, setBiography] = useState();
 
   useEffect(() => {
     props.getUserInfo(props.urlName);
@@ -27,11 +30,17 @@ function AccountCenter(props) {
     if (props.profile._id) {
       props.getUserTweets(props.profile._id);
       setFollowed(props.profile.followers.includes(props.current.id));
+      setBiography(props.profile.biography);
+      setName(props.profile.name);
     }
   }, [props.profile._id, props.urlName]);
 
   function handleChange(e) {
-    console.log("e t v", e.target.value);
+    if (e.target.name === "biography") {
+      setBiography(e.target.value);
+    } else {
+      setName(e.target.value);
+    }
   }
 
   function toggleEditable() {
@@ -46,6 +55,18 @@ function AccountCenter(props) {
     } else {
       props.unfollowUser(props.current.id, props.profile._id);
     }
+  }
+
+  function saveEdits() {
+    setEditable(false);
+
+    const obj = {
+      id: props.current.id,
+      biography,
+      name,
+    };
+
+    props.editBioAndName(obj);
   }
 
   return (
@@ -90,7 +111,7 @@ function AccountCenter(props) {
                 <button
                   type="submit"
                   className="btn submit-button"
-                  onClick={toggleEditable}
+                  onClick={saveEdits}
                 >
                   Sauvegarder
                 </button>
@@ -116,9 +137,8 @@ function AccountCenter(props) {
                 type="text"
                 name="name"
                 className="validate"
-                value={props.current.name}
+                value={name}
               />
-              {/* <span className="red-text">{fields.errors.password}</span> */}
             </div>
             <div className="input-field col s12">
               <input
@@ -128,9 +148,8 @@ function AccountCenter(props) {
                 type="text"
                 name="biography"
                 className="validate"
-                value={props.current.biography}
+                value={biography}
               />
-              {/* <span className="red-text">{fields.errors.password}</span> */}
             </div>
           </div>
         ) : (
@@ -143,6 +162,9 @@ function AccountCenter(props) {
                 aria-hidden="true"
                 alt="Vérifié"
               ></i>
+            )}
+            {props.profile.protected && (
+              <i className="fa fa-lock" aria-hidden="true"></i>
             )}
             <div className="account-follows">
               {props.profile.following && (
@@ -159,7 +181,9 @@ function AccountCenter(props) {
                 </span>
               )}
             </div>
-            {props.profile.biography && <p>{props.profile.biography}</p>}
+            {props.profile.biography && (
+              <p className="account-biography">{props.profile.biography}</p>
+            )}
             <p>
               <i className="fa fa-calendar" aria-hidden="true"></i>A rejoint
               Twister en{" "}
@@ -169,6 +193,7 @@ function AccountCenter(props) {
         )}
       </div>
       {props.profile.protected &&
+      props.current.id !== props.profile._id &&
       !props.profile.following.includes(props.current.id) ? (
         <div className="protected-content">
           <p className="protected-title">Ces tweets sont protégés</p>
@@ -192,7 +217,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
-    { followUser, getUserInfo, getUserTweets, unfollowUser },
+    {
+      editBioAndName,
+      followUser,
+      getUserInfo,
+      getUserTweets,
+      unfollowUser,
+    },
     dispatch
   );
 

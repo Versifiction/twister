@@ -60,10 +60,7 @@ router.get("/:id", cors(corsOptions), async function (req, res) {
     return dateA - dateB;
   });
 
-  console.log("u t", userTweetsAndRetweets);
-  console.log("u t sorted", sortedUserTweetsAndRetweets);
-
-  res.send(userTweetsAndRetweets.reverse());
+  res.send(sortedUserTweetsAndRetweets.reverse());
 });
 
 // route pour supprimer un de ses tweets

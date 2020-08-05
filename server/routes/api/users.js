@@ -37,6 +37,16 @@ router.get("/getRandom", cors(corsOptions), async function (req, res) {
   res.send(users);
 });
 
+// route pour éditer la bio et le nom d'un utilisateur
+router.post("/editBioAndName", cors(corsOptions), async function (req, res) {
+  const user1 = await User.updateOne(
+    { _id: req.body.obj.id },
+    { name: req.body.obj.name, biography: req.body.obj.biography }
+  );
+
+  res.send(user1);
+});
+
 // route pour avoir les infos d'un utilisateur
 router.get("/user/:username", cors(corsOptions), async function (req, res) {
   const user = await User.find(

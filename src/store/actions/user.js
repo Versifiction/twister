@@ -2,6 +2,7 @@ import axios from "axios";
 
 import {
   DELETE_USER_TWEET,
+  EDIT_BIO_AND_NAME,
   FOLLOW_USER,
   GET_ERRORS,
   GET_FEED_USER,
@@ -112,6 +113,22 @@ export const getSuggestions = () => (dispatch) => {
       dispatch({
         type: GET_SUGGESTIONS,
         payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const editBioAndName = (obj) => (dispatch) => {
+  axios
+    .post(`${process.env.REACT_APP_SERVER_PORT}/api/users/editBioAndName`, {
+      obj,
+    })
+    .then((res) => {
+      dispatch({
+        type: EDIT_BIO_AND_NAME,
+        payload: obj,
       });
     })
     .catch((err) => {

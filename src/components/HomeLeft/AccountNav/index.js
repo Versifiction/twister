@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
@@ -8,11 +8,16 @@ import {
   resetNewTweetInput,
   sendNewTweet,
 } from "../../../store/actions/tweets";
+import M from "materialize-css";
 
 import "./AccountNav.css";
 
 function AccountNav(props) {
   const newTweetInput = useRef(null);
+
+  useEffect(() => {
+    M.AutoInit();
+  });
 
   function focusNewTweetInput() {
     newTweetInput.current.focus();

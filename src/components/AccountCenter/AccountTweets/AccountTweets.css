@@ -42,3 +42,18 @@
 .retweeted {
   color: green;
 }
+
+.isARetweet {
+  display: block;
+}
+
+.AccountTweet-isARetweet {
+  display: inline;
+}
+
+.isARetweet-icon,
+.AccountTweet-isARetweet {
+  color: #8899a6;
+  margin-right: 4px;
+  font-size: 0.75rem !important;
+}

@@ -41,6 +41,14 @@ function AccountTweets(props) {
       {props.tweets &&
         props.tweets.map((tweet) => (
           <div className="AccountTweet" key={tweet._id}>
+            {props.profile._id !== tweet.writerId && (
+              <div className="isARetweet">
+                <i className="fa fa-retweet isARetweet-icon"></i>
+                <p className="AccountTweet-isARetweet">
+                  {props.profile.name} a retweeté
+                </p>
+              </div>
+            )}
             <Link
               href={`/user/${tweet.writerUsername}`}
               to={`/user/${tweet.writerUsername}`}

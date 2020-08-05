@@ -1,4 +1,5 @@
 export const DELETE_USER_TWEET = "DELETE_USER_TWEET";
+export const EDIT_BIO_AND_NAME = "EDIT_BIO_AND_NAME";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const GET_ERRORS = "GET_ERRORS";
 export const GET_FEED_USER = "GET_FEED_USER";

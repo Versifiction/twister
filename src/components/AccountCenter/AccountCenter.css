@@ -62,7 +62,8 @@
   margin-right: 10px;
 }
 
-.account-follows {
+.account-follows,
+.account-biography {
   margin: 10px 0;
 }
 
@@ -82,4 +83,9 @@
 
 .protected-text {
   color: #8899a6;
+}
+
+.fa-lock {
+  color: white;
+  margin-left: 4px;
 }
