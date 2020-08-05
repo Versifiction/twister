@@ -71,7 +71,8 @@
   font-weight: bold;
 }
 
-.protected-content {
+.protected-content,
+.no-tweets {
   text-align: center;
   padding: 20px;
 }

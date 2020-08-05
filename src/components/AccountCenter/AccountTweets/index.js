@@ -38,6 +38,11 @@ function AccountTweets(props) {
 
   return (
     <div className="AccountTweets">
+      {props.tweets.length === 0 && (
+        <p className="no-tweets">
+          Cet utilisateur n'a pas encore tweeté ou retweeté !
+        </p>
+      )}
       {props.tweets &&
         props.tweets.map((tweet) => (
           <div className="AccountTweet" key={tweet._id}>

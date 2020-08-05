@@ -128,8 +128,6 @@ export default function user(state = initialState, action) {
         },
       };
     case UNRETWEET_TWEET:
-      console.log("state current ", state.current.id);
-      console.log("state profile ", state.profile._id);
       const indexRt = state.tweets
         .filter((t) => t._id === action.idTweet)[0]
         .retweets.indexOf(action.idUser);
