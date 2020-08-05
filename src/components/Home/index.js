@@ -18,7 +18,7 @@ function Home() {
           <div className="col s12 l3">
             <AccountNav />
           </div>
-          <div className="col s12 l6 centered">
+          <div className="col s12 l6">
             <Feed />
           </div>
           <div className="col s12 l3">

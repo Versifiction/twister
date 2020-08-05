@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { TextBlock } from "react-placeholder/lib/placeholders";
+import { ReactPlaceholder } from "react-placeholder";
+import "react-placeholder/lib/reactPlaceholder.css";
 import { deleteUserTweet, getFeedUser } from "../../../store/actions/user";
 import {
   retweetTweet,
@@ -13,6 +16,7 @@ import {
 } from "../../../store/actions/tweets";
 
 import "./Feed.css";
+import FeedPlaceholder from "../../Placeholders/Feed";
 
 function Feed(props) {
   useEffect(() => {
@@ -37,6 +41,24 @@ function Feed(props) {
     } else {
       props.retweetTweet(idTweet, idUser);
     }
+  }
+
+  const awesomePlaceholder = (
+    <div>
+      <div className="AccountTweet">
+        <TextBlock rows={3} color="grey" />
+      </div>
+      <div className="AccountTweet">
+        <TextBlock rows={3} color="grey" />
+      </div>
+      <div className="AccountTweet">
+        <TextBlock rows={3} color="grey" />
+      </div>
+    </div>
+  );
+
+  if (props.loading) {
+    return <FeedPlaceholder />;
   }
 
   return (
@@ -136,6 +158,7 @@ const mapStateToProps = (state) => ({
   current: state.user.current,
   profile: state.user.profile,
   tweets: state.user.tweets,
+  loading: state.loading.loadingFeed,
 });
 
 const mapDispatchToProps = (dispatch) =>

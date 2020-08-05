@@ -9,6 +9,21 @@ import {
   GET_SUGGESTIONS,
   GET_USER_INFO,
   GET_USER_TWEETS,
+  LOADING_ACCOUNT,
+  LOADING_FEED,
+  LOADING_SETTINGS,
+  LOADING_SUGGESTIONS,
+  LOADING_TRENDS,
+  LOADING_ACCOUNT_SUCCESS,
+  LOADING_FEED_SUCCESS,
+  LOADING_SETTINGS_SUCCESS,
+  LOADING_SUGGESTIONS_SUCCESS,
+  LOADING_TRENDS_SUCCESS,
+  LOADING_ACCOUNT_FAIL,
+  LOADING_FEED_FAIL,
+  LOADING_SETTINGS_FAIL,
+  LOADING_SUGGESTIONS_FAIL,
+  LOADING_TRENDS_FAIL,
   UNFOLLOW_USER,
 } from "../constants/types";
 
@@ -31,6 +46,10 @@ export const getUserInfo = (username) => (dispatch) => {
 };
 
 export const getUserTweets = (id) => (dispatch) => {
+  dispatch({
+    type: LOADING_ACCOUNT,
+  });
+
   axios
     .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/${id}`)
     .then((res) => {
@@ -38,13 +57,25 @@ export const getUserTweets = (id) => (dispatch) => {
         type: GET_USER_TWEETS,
         payload: res.data,
       });
+      dispatch({
+        type: LOADING_ACCOUNT_SUCCESS,
+        payload: res.data,
+      });
     })
     .catch((err) => {
       console.log("err ", err);
+      dispatch({
+        type: LOADING_ACCOUNT_FAIL,
+        payload: err,
+      });
     });
 };
 
 export const getFeedUser = (id) => (dispatch) => {
+  dispatch({
+    type: LOADING_FEED,
+  });
+
   axios
     .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/following/${id}`)
     .then((res) => {
@@ -52,9 +83,17 @@ export const getFeedUser = (id) => (dispatch) => {
         type: GET_FEED_USER,
         payload: res.data,
       });
+      dispatch({
+        type: LOADING_FEED_SUCCESS,
+        payload: res.data,
+      });
     })
     .catch((err) => {
       console.log("err ", err);
+      dispatch({
+        type: LOADING_FEED_FAIL,
+        payload: err,
+      });
     });
 };
 
@@ -107,6 +146,10 @@ export const unfollowUser = (currentUserId, idToUnfollow) => (dispatch) => {
 };
 
 export const getSuggestions = () => (dispatch) => {
+  dispatch({
+    type: LOADING_SUGGESTIONS,
+  });
+
   axios
     .get(`${process.env.REACT_APP_SERVER_PORT}/api/users/getRandom`)
     .then((res) => {
@@ -114,9 +157,17 @@ export const getSuggestions = () => (dispatch) => {
         type: GET_SUGGESTIONS,
         payload: res.data,
       });
+      dispatch({
+        type: LOADING_SUGGESTIONS_SUCCESS,
+        payload: res.data,
+      });
     })
     .catch((err) => {
       console.log("err ", err);
+      dispatch({
+        type: LOADING_SUGGESTIONS_FAIL,
+        payload: err,
+      });
     });
 };
 

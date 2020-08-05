@@ -34,13 +34,12 @@ function Suggestions(props) {
             </div>
           </div>
         ))}
-      <NavLink
+      <div
         className="see-all trending-topic-after padding"
-        to="/explore"
-        href="/explore"
+        onClick={() => props.getSuggestions()}
       >
-        Voir plus
-      </NavLink>
+        En avoir d'autres
+      </div>
     </div>
   );
 }

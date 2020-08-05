@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+import io from "socket.io-client";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -14,10 +15,15 @@ import "./AccountNav.css";
 
 function AccountNav(props) {
   const newTweetInput = useRef(null);
+  const socket = io(process.env.REACT_APP_SERVER_PORT, { secure: true });
 
   useEffect(() => {
     M.AutoInit();
-  });
+
+    //   socket.on("send tweet", (data) => {
+    //     props.tweets.unshift(data);
+    //   });
+  }, []);
 
   function focusNewTweetInput() {
     newTweetInput.current.focus();
@@ -25,11 +31,13 @@ function AccountNav(props) {
 
   function tweet(e) {
     const tweetData = {
-      tweetValue: props.tweetValue,
-      writerId: props.id,
-      writerName: props.name,
-      writerUsername: props.username,
+      tweetValue: props.newTweet.tweetValue,
+      writerId: props.current.id,
+      writerName: props.current.name,
+      writerUsername: props.current.username,
     };
+
+    socket.emit("send tweet", tweetData);
 
     props.sendNewTweet(tweetData);
 
@@ -91,8 +99,8 @@ function AccountNav(props) {
         <li>
           <NavLink
             activeClassName="active"
-            href={`/user/${props.username}`}
-            to={`/user/${props.username}`}
+            href={`/user/${props.current.username}`}
+            to={`/user/${props.current.username}`}
           >
             <i className="fa fa-user icon-account-nav" aria-hidden="true"></i>
             Mon compte
@@ -124,7 +132,7 @@ function AccountNav(props) {
             <h4 className="new-tweet-title">Nouveau tweet</h4>
             <textarea
               type="text"
-              value={props.tweetValue}
+              value={props.newTweet.tweetValue}
               onChange={(e) => props.newTweetInputChange(e.target.value)}
               placeholder="Quoi de neuf ?"
               ref={newTweetInput}
@@ -134,18 +142,21 @@ function AccountNav(props) {
             <div className="new-tweet-counter-container">
               <span
                 className={classNames("new-tweet-length", {
-                  "new-tweet-length-red": props.tweetValue.length > 140,
+                  "new-tweet-length-red":
+                    props.newTweet.tweetValue.length > 140,
                 })}
               >
-                {props.tweetValue.length}
+                {props.newTweet.tweetValue.length}
               </span>
-              <span className="new-tweet-max-length">/{props.maxLength}</span>
+              <span className="new-tweet-max-length">
+                /{props.newTweet.maxLength}
+              </span>
             </div>
             <div>
               <button
                 className="btn modal-close"
                 onClick={(e) => tweet(e)}
-                disabled={props.tweetValue.length > 140}
+                disabled={props.newTweet.tweetValue.length > 140}
               >
                 Tweeter
               </button>
@@ -158,11 +169,9 @@ function AccountNav(props) {
 }
 
 const mapStateToProps = (state) => ({
-  username: state.user.current.username,
-  name: state.user.current.name,
-  id: state.user.current.id,
-  tweetValue: state.newTweet.tweetValue,
-  maxLength: state.newTweet.maxLength,
+  current: state.user.current,
+  newTweet: state.newTweet,
+  tweets: state.user.tweets,
 });
 
 const mapDispatchToProps = (dispatch) =>

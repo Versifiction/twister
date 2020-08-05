@@ -21,6 +21,7 @@ import {
 
 const initialState = {
   isConnected: false,
+  isLoading: true,
   current: {},
   profile: {},
   tweets: [],

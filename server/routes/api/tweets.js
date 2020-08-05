@@ -63,13 +63,7 @@ router.get("/:id", cors(corsOptions), async function (req, res) {
   res.send(sortedUserTweetsAndRetweets.reverse());
 });
 
-// route pour supprimer un de ses tweets
-router.delete("/delete/:id", cors(corsOptions), async function (req, res) {
-  const tweets = await Tweet.findByIdAndRemove({ _id: req.params.id });
-  res.send(tweets);
-});
-
-// route pour avoir les tweets des abonnements d'un utilisateur (page Home -> /home)
+// route pour avoir les tweets + les retweets des abonnements d'un utilisateur (page Home -> /home)
 router.get("/following/:id", cors(corsOptions), async function (req, res) {
   const following = await User.find(
     { _id: req.params.id },
@@ -78,12 +72,18 @@ router.get("/following/:id", cors(corsOptions), async function (req, res) {
 
   following[0].following.push(req.params.id);
 
-  const tweets = await Tweet.find({
+  const followingTweets = await Tweet.find({
     writerId: { $in: following[0].following },
   }).sort({
     tweetedAt: -1,
   });
 
+  res.send(followingTweets);
+});
+
+// route pour supprimer un de ses tweets
+router.delete("/delete/:id", cors(corsOptions), async function (req, res) {
+  const tweets = await Tweet.findByIdAndRemove({ _id: req.params.id });
   res.send(tweets);
 });
 

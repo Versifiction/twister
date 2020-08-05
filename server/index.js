@@ -11,6 +11,8 @@ const port = process.env.SERVER_PORT || 5000;
 const app = express();
 const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
+const server = app.listen(port);
+const io = require("socket.io").listen(server);
 
 require("dotenv").config();
 // require("./config/passport")(passport);
@@ -25,6 +27,7 @@ const whitelist = [
   "http://localhost:5000",
   "https://ofilms.herokuapp.com",
 ];
+
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -34,6 +37,8 @@ const corsOptions = {
     }
   },
 };
+
+let Tweet = require("./models/Tweet");
 
 // app.use(cors());
 app.options("*", cors(corsOptions));
@@ -62,16 +67,27 @@ app.get("/ping", function (req, res) {
   res.send("pong");
 });
 
+io.on("connection", function (socket) {
+  socket.on("send tweet", async function (tweet) {
+    try {
+      io.emit("send tweet", tweet);
+      const sent = await Tweet.create(tweet, function (err, res) {
+        if (err) throw err;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+});
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@ofilms-demo-f9iwz.mongodb.net/${process.env.DB}`,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
-  .then(() =>
-    app.listen(port, () =>
-      console.log(
-        `Le serveur tourne sur le port ${port} et la connexion a la base de données est OK !`
-      )
+  .then(() => () =>
+    console.log(
+      `Le serveur tourne sur le port ${port} et la connexion a la base de données est OK !`
     )
   )
   .catch((err) => console.log(err));
