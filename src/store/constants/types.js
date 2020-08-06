@@ -1,9 +1,13 @@
 export const DELETE_USER_TWEET = "DELETE_USER_TWEET";
 export const EDIT_BIO_AND_NAME = "EDIT_BIO_AND_NAME";
+export const EDIT_BANNER = "EDIT_BANNER";
+export const EDIT_PICTURE = "EDIT_PICTURE";
 export const FOLLOW_USER = "FOLLOW_USER";
+export const GET_BANNER = "GET_BANNER";
 export const GET_ERRORS = "GET_ERRORS";
 export const GET_FEED_USER = "GET_FEED_USER";
 export const GET_SUGGESTIONS = "GET_SUGGESTIONS";
+export const GET_PICTURE = "GET_PICTURE";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const GET_USER_TWEETS = "GET_USER_TWEETS";
 export const LIKE_TWEET = "LIKE_TWEET";

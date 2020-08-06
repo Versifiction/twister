@@ -13,6 +13,7 @@ const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 const server = app.listen(port);
 const io = require("socket.io").listen(server);
+const url = require("./config/db_url").url;
 
 require("dotenv").config();
 // require("./config/passport")(passport);
@@ -40,8 +41,8 @@ const corsOptions = {
 
 let Tweet = require("./models/Tweet");
 
-// app.use(cors());
-app.options("*", cors(corsOptions));
+app.use(cors());
+// app.options("*", cors(corsOptions));
 // app.use(limiter);
 app.use(morgan("tiny"));
 app.use(helmet());
@@ -81,10 +82,11 @@ io.on("connection", function (socket) {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@ofilms-demo-f9iwz.mongodb.net/${process.env.DB}`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
-  )
+  .connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
   .then(() => () =>
     console.log(
       `Le serveur tourne sur le port ${port} et la connexion a la base de données est OK !`

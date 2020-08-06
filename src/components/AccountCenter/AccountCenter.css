@@ -90,3 +90,14 @@
   color: white;
   margin-left: 4px;
 }
+
+.input-file {
+  display: none;
+}
+
+.fa-camera {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

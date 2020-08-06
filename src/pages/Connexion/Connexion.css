@@ -32,6 +32,10 @@
   text-align: center;
 }
 
+.Connexion .input-field {
+  display: inherit !important;
+}
+
 .nc-col-1 {
   background-image: url("../../assets/bg-not-connected.png");
   background-size: cover;

@@ -4,10 +4,12 @@ import {
   DELETE_USER_TWEET,
   EDIT_BIO_AND_NAME,
   FOLLOW_USER,
+  GET_BANNER,
   GET_FEED_USER,
+  GET_PICTURE,
+  GET_SUGGESTIONS,
   GET_USER_INFO,
   GET_USER_TWEETS,
-  GET_SUGGESTIONS,
   LIKE_TWEET,
   LOGIN,
   LOGOUT,
@@ -52,13 +54,21 @@ export default function user(state = initialState, action) {
           followers: [...state.profile.followers, action.payload],
         },
       };
+    case GET_BANNER:
+      return {
+        ...state,
+        profile: { ...state.profile, banner: action.payload },
+      };
     case GET_FEED_USER:
       return {
         ...state,
         tweets: action.payload,
       };
-    case GET_SUGGESTIONS:
-      return { ...state, suggestions: action.payload };
+    case GET_PICTURE:
+      return {
+        ...state,
+        profile: { ...state.profile, profilePicture: action.payload },
+      };
     case GET_USER_INFO:
       return {
         ...state,
@@ -66,6 +76,8 @@ export default function user(state = initialState, action) {
       };
     case GET_USER_TWEETS:
       return { ...state, tweets: action.payload };
+    case GET_SUGGESTIONS:
+      return { ...state, suggestions: action.payload };
     case SEND_NEW_TWEET:
       return { ...state, tweets: [action.payload, ...state.tweets] };
     case SET_CURRENT_USER:
@@ -129,6 +141,13 @@ export default function user(state = initialState, action) {
         },
       };
     case UNRETWEET_TWEET:
+      console.log("id profil visité ", state.profile._id);
+      console.log("id connecté ", state.current.id);
+      console.log(
+        "tweet ",
+        state.tweets.filter((t) => t._id === action.idTweet)[0].writerId
+      );
+
       const indexRt = state.tweets
         .filter((t) => t._id === action.idTweet)[0]
         .retweets.indexOf(action.idUser);
@@ -144,7 +163,8 @@ export default function user(state = initialState, action) {
           retweets: state.profile.retweets.filter((t) => t !== action.idTweet),
         },
         tweets:
-          state.profile._id === state.current.id
+          state.tweets.filter((t) => t._id === action.idTweet)[0].writerId !==
+          state.current.id
             ? state.tweets.filter((t) => t._id !== action.idTweet)
             : state.tweets,
       };

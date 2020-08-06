@@ -3,9 +3,13 @@ import axios from "axios";
 import {
   DELETE_USER_TWEET,
   EDIT_BIO_AND_NAME,
+  EDIT_BANNER,
+  EDIT_PICTURE,
   FOLLOW_USER,
+  GET_BANNER,
   GET_ERRORS,
   GET_FEED_USER,
+  GET_PICTURE,
   GET_SUGGESTIONS,
   GET_USER_INFO,
   GET_USER_TWEETS,
@@ -38,10 +42,6 @@ export const getUserInfo = (username) => (dispatch) => {
     })
     .catch((err) => {
       console.log("err ", err);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
     });
 };
 
@@ -180,6 +180,85 @@ export const editBioAndName = (obj) => (dispatch) => {
       dispatch({
         type: EDIT_BIO_AND_NAME,
         payload: obj,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const editPicture = (obj, id) => (dispatch) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
+  axios
+    .post(
+      `${process.env.REACT_APP_SERVER_PORT}/api/users/editPicture/${id}`,
+      obj,
+      config
+    )
+    .then((res) => {
+      console.log("res ", res);
+      dispatch({
+        type: EDIT_PICTURE,
+        payload: obj,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const editBanner = (obj, id) => (dispatch) => {
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
+  axios
+    .post(
+      `${process.env.REACT_APP_SERVER_PORT}/api/users/editBanner/${id}`,
+      obj,
+      config
+    )
+    .then((res) => {
+      dispatch({
+        type: EDIT_BANNER,
+        payload: obj,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const getBanner = (id) => (dispatch) => {
+  axios
+    .get(`${process.env.REACT_APP_SERVER_PORT}/api/users/banner/${id}`)
+    .then((res) => {
+      console.log("res ", res);
+      dispatch({
+        type: GET_BANNER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const getPicture = (id) => (dispatch) => {
+  axios
+    .get(`${process.env.REACT_APP_SERVER_PORT}/api/users/picture/${id}`)
+    .then((res) => {
+      console.log("res ", res);
+      dispatch({
+        type: GET_PICTURE,
+        payload: res.data,
       });
     })
     .catch((err) => {

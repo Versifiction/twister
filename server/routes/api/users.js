@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const isEmpty = require("is-empty");
 const keys = require("../../config/keys");
+const multer = require("multer");
+const fs = require("fs-extra");
+const url = require("../../config/db_url").url;
 const ObjectId = require("mongodb").ObjectId;
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -14,31 +17,42 @@ let User = require("../../models/User");
 let Tweet = require("../../models/Tweet");
 const BCRYPT_SALT_ROUNDS = 12;
 
-const whitelist = ["http://localhost:3000", "http://localhost:5000"];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
   },
-};
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// const whitelist = ["http://localhost:3000", "http://localhost:5000"];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 
 // route pour avoir tous les utilisateurs
-router.get("/getAll", cors(corsOptions), async function (req, res) {
+router.get("/getAll", async function (req, res) {
   const users = await User.find({});
   res.send(users);
 });
 
 // route pour avoir 3 utilisateurs au hasard
-router.get("/getRandom", cors(corsOptions), async function (req, res) {
+router.get("/getRandom", async function (req, res) {
   const users = await User.aggregate([{ $sample: { size: 3 } }]);
   res.send(users);
 });
 
 // route pour éditer la bio et le nom d'un utilisateur
-router.post("/editBioAndName", cors(corsOptions), async function (req, res) {
+router.post("/editBioAndName", async function (req, res) {
   const user1 = await User.updateOne(
     { _id: req.body.obj.id },
     { name: req.body.obj.name, biography: req.body.obj.biography }
@@ -47,8 +61,77 @@ router.post("/editBioAndName", cors(corsOptions), async function (req, res) {
   res.send(user1);
 });
 
+// route pour éditer la bannière d'un utilisateur
+router.post(
+  "/editBanner/:id",
+
+  upload.single("banner"),
+  async function (req, res) {
+    const img = fs.readFileSync(req.file.path);
+    const encode_image = img.toString("base64");
+
+    const finalImg = {
+      contentType: req.file.mimetype,
+      image: new Buffer(encode_image, "base64"),
+    };
+
+    const user1 = await User.updateOne(
+      { _id: req.params.id },
+      {
+        banner: finalImg.image,
+        bannerType: finalImg.contentType,
+      }
+    );
+
+    res.send(user1);
+  }
+);
+
+// route pour éditer la photo d'un utilisateur
+router.post("/editPicture/:id", upload.single("picture"), async function (
+  req,
+  res
+) {
+  const img = fs.readFileSync(req.file.path);
+  const encode_image = img.toString("base64");
+
+  const finalImg = {
+    contentType: req.file.mimetype,
+    image: new Buffer(encode_image, "base64"),
+  };
+
+  const user1 = await User.updateOne(
+    { _id: req.params.id },
+    {
+      profilePicture: finalImg.image,
+      profilePictureType: finalImg.contentType,
+    }
+  );
+
+  res.send(user1);
+});
+
+// route pour avoir la photo d'un utilisateur
+router.get("/picture/:id", function (req, res) {
+  User.findOne({ _id: ObjectId(req.params.id) }, (err, result) => {
+    if (err) return console.log(err);
+    res.contentType(result.profilePictureType);
+    res.send(Buffer.from(result.profilePicture.buffer, "base64"));
+  });
+});
+
+// route pour avoir la bannière d'un utilisateur
+router.get("/banner/:id", function (req, res) {
+  User.findOne({ _id: ObjectId(req.params.id) }, (err, result) => {
+    if (err) return console.log(err);
+    res.contentType(result.bannerType);
+    res.send(Buffer.from(result.banner.buffer, "base64"));
+  });
+});
+
 // route pour avoir les infos d'un utilisateur
-router.get("/user/:username", cors(corsOptions), async function (req, res) {
+router.get("/user/:username", async function (req, res) {
+  console.log("username ", req.params.username);
   const user = await User.find(
     { username: req.params.username },
     { password: 0 }
@@ -57,7 +140,7 @@ router.get("/user/:username", cors(corsOptions), async function (req, res) {
 });
 
 // route pour follow un utilisateur
-router.post("/user/follow/:id", cors(corsOptions), async function (req, res) {
+router.post("/user/follow/:id", async function (req, res) {
   const userToFollow = req.body.idToFollow;
   const currentUser = req.params.id;
 
@@ -75,7 +158,7 @@ router.post("/user/follow/:id", cors(corsOptions), async function (req, res) {
 });
 
 // route pour unfollow un utilisateur
-router.post("/user/unfollow/:id", cors(corsOptions), async function (req, res) {
+router.post("/user/unfollow/:id", async function (req, res) {
   const userToUnfollow = req.body.idToUnfollow;
   const currentUser = req.params.id;
 
@@ -93,7 +176,7 @@ router.post("/user/unfollow/:id", cors(corsOptions), async function (req, res) {
 });
 
 // route pour s'inscrire (page Inscription -> /inscription)
-router.post("/register", cors(corsOptions), async function (req, res) {
+router.post("/register", async function (req, res) {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
@@ -123,7 +206,9 @@ router.post("/register", cors(corsOptions), async function (req, res) {
           password: req.body.password,
           biography: "",
           banner: "",
+          bannerType: "",
           profilePicture: "",
+          profilePictureType: "",
           following: [],
           followers: [],
           retweets: [],
@@ -159,7 +244,7 @@ router.post("/register", cors(corsOptions), async function (req, res) {
 });
 
 // route pour se connecter (page Connexion -> /connexion)
-router.post("/login", cors(corsOptions), (req, res) => {
+router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
   if (!isValid) {

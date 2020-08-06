@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   followUser,
+  editBanner,
+  editPicture,
+  getBanner,
   getUserInfo,
   getUserTweets,
+  getPicture,
   unfollowUser,
   editBioAndName,
 } from "../../store/actions/user";
@@ -17,29 +21,57 @@ import placeholderBanner from "../../assets/placeholderBanner.png";
 import AccountTweets from "./AccountTweets";
 
 function AccountCenter(props) {
+  const [pictureFile, setPictureFile] = useState(null);
+  const [bannerFile, setBannerFile] = useState(null);
+  const hiddenPictureFileInput = useRef(null);
+  const hiddenBannerFileInput = useRef(null);
   const [followed, setFollowed] = useState();
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState();
   const [biography, setBiography] = useState();
 
   useEffect(() => {
+    console.log("pictureFile ", pictureFile);
+    console.log("bannerFile ", bannerFile);
+  }, [pictureFile, bannerFile]);
+
+  useEffect(() => {
     props.getUserInfo(props.urlName);
+    if (props.profile) {
+      props.getPicture(props.profile._id);
+      props.getBanner(props.profile._id);
+    }
   }, [props.urlName]);
 
   useEffect(() => {
-    if (props.profile._id) {
+    if (props.profile && props.profile._id) {
       props.getUserTweets(props.profile._id);
       setFollowed(props.profile.followers.includes(props.current.id));
       setBiography(props.profile.biography);
       setName(props.profile.name);
     }
-  }, [props.profile._id, props.urlName]);
+  }, [props.profile, props.urlName]);
+
+  function handleClick(e) {
+    if (editable) {
+      console.log(e.target.name);
+      if (e.target.name === "banner") {
+        hiddenBannerFileInput.current.click();
+      } else if (e.target.name === "picture") {
+        hiddenPictureFileInput.current.click();
+      }
+    }
+  }
 
   function handleChange(e) {
     if (e.target.name === "biography") {
       setBiography(e.target.value);
-    } else {
+    } else if (e.target.name === "name") {
       setName(e.target.value);
+    } else if (e.target.name === "banner") {
+      setBannerFile(e.target.files[0]);
+    } else if (e.target.name === "picture") {
+      setPictureFile(e.target.files[0]);
     }
   }
 
@@ -57,7 +89,9 @@ function AccountCenter(props) {
     }
   }
 
-  function saveEdits() {
+  function saveEdits(e) {
+    e.preventDefault();
+
     setEditable(false);
 
     const obj = {
@@ -66,25 +100,79 @@ function AccountCenter(props) {
       name,
     };
 
+    const formData = new FormData();
+    const formData2 = new FormData();
+
+    formData.append("picture", pictureFile);
+    formData2.append("banner", bannerFile);
+
+    props.editPicture(formData, obj.id);
+    props.editBanner(formData2, props.current.id);
+
     props.editBioAndName(obj);
   }
 
   return (
     <div className="AccountCenter">
-      <div className="banner-img-container">
-        <img
-          src={placeholderBanner}
-          alt="Placeholder bannière"
-          className="banner-img"
-        />
-      </div>
-      <div className="profile-img-container">
-        <img
-          src={placeholderPicture}
-          alt="Placeholder profil"
-          className="profile-img"
-        />
-      </div>
+      {!props.profile._id && <p>Cet utilisateur n'existe pas</p>}
+      <form method="post" encType="multipart/form-data" onSubmit={saveEdits}>
+        <div className="banner-img-container">
+          {editable && (
+            <input
+              type="file"
+              name="banner"
+              ref={hiddenBannerFileInput}
+              onChange={handleChange}
+              className="input-file"
+            />
+          )}
+          {!props.profile.bannerType ? (
+            <img
+              src={placeholderBanner}
+              alt="Placeholder bannière"
+              name="banner"
+              className="banner-img"
+              onClick={handleClick}
+            />
+          ) : (
+            <img
+              src={`${process.env.REACT_APP_SERVER_PORT}/api/users/banner/${props.profile._id}`}
+              alt="Placeholder banniere"
+              name="banner"
+              className="banner-img"
+              onClick={handleClick}
+            />
+          )}
+        </div>
+        <div className="profile-img-container">
+          {editable && (
+            <input
+              type="file"
+              name="picture"
+              ref={hiddenPictureFileInput}
+              onChange={handleChange}
+              className="input-file"
+            />
+          )}
+          {!props.profile.profilePictureType ? (
+            <img
+              src={placeholderPicture}
+              alt="Placeholder profil"
+              name="picture"
+              className="profile-img"
+              onClick={handleClick}
+            />
+          ) : (
+            <img
+              src={`${process.env.REACT_APP_SERVER_PORT}/api/users/picture/${props.profile._id}`}
+              alt="Placeholder profil"
+              name="picture"
+              className="profile-img"
+              onClick={handleClick}
+            />
+          )}
+        </div>
+      </form>
       <div className="account-header">
         {props.profile.username !== props.current.username ? (
           <div className="account-follow">
@@ -219,9 +307,13 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       editBioAndName,
+      editBanner,
+      editPicture,
       followUser,
+      getBanner,
       getUserInfo,
       getUserTweets,
+      getPicture,
       unfollowUser,
     },
     dispatch

@@ -23,8 +23,10 @@ const UserSchema = new Schema({
   retweets: Array,
   likes: Array,
   lists: Array,
-  banner: String,
-  profilePicture: String,
+  banner: Buffer,
+  bannerType: String,
+  profilePicture: Buffer,
+  profilePictureType: String,
   creationDate: {
     type: Date,
     default: Date.now,

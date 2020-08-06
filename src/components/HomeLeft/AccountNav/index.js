@@ -15,15 +15,15 @@ import "./AccountNav.css";
 
 function AccountNav(props) {
   const newTweetInput = useRef(null);
-  const socket = io(process.env.REACT_APP_SERVER_PORT, { secure: true });
+  // const socket = io(process.env.REACT_APP_SERVER_PORT, { secure: true });
 
   useEffect(() => {
     M.AutoInit();
 
-    //   socket.on("send tweet", (data) => {
-    //     props.tweets.unshift(data);
-    //   });
-  }, []);
+    // socket.on("send tweet", (data) => {
+    //   console.log("data ", data);
+    // });
+  });
 
   function focusNewTweetInput() {
     newTweetInput.current.focus();
@@ -37,7 +37,7 @@ function AccountNav(props) {
       writerUsername: props.current.username,
     };
 
-    socket.emit("send tweet", tweetData);
+    // socket.emit("send tweet", tweetData);
 
     props.sendNewTweet(tweetData);
 
