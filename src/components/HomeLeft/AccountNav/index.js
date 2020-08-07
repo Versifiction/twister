@@ -18,8 +18,6 @@ function AccountNav(props) {
   // const socket = io(process.env.REACT_APP_SERVER_PORT, { secure: true });
 
   useEffect(() => {
-    M.AutoInit();
-
     // socket.on("send tweet", (data) => {
     //   console.log("data ", data);
     // });

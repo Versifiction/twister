@@ -9,3 +9,7 @@
 .Feed-NoMessage {
   text-align: center;
 }
+
+p.AccountTweet-tweetValue {
+  overflow-wrap: break-word;
+}

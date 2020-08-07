@@ -256,8 +256,8 @@ router.post("/login", (req, res) => {
 
   User.findOne({ email }).then((user) => {
     if (!user) {
-      errors.email = "Les identifiants rentrés ne sont pas valides";
-      errors.password = "Les identifiants rentrés ne sont pas valides";
+      errors.email = "L'adresse e-mail rentrée n'existe pas dans nos systèmes";
+
       return res.status(400).json(errors);
     }
 
@@ -286,9 +286,7 @@ router.post("/login", (req, res) => {
         });
       } else {
         errors.password = "Le mot de passe saisi n'est pas correct";
-        // return res
-        //   .status(400)
-        //   .json({ passwordincorrect: "Password incorrect" });
+        return res.status(400).json(errors);
       }
     });
   });
