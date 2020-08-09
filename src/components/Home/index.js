@@ -3,6 +3,7 @@ import React from "react";
 import "./Home.css";
 import Nav from "../Nav";
 import AccountNav from "../HomeLeft/AccountNav";
+import NewTweet from "../HomeCenter/NewTweet";
 import Feed from "../HomeCenter/Feed";
 import Searchbar from "../HomeRight/Searchbar";
 import Suggestions from "../HomeRight/Suggestions";
@@ -19,6 +20,7 @@ function Home() {
             <AccountNav />
           </div>
           <div className="col s12 l6">
+            <NewTweet />
             <Feed />
           </div>
           <div className="col s12 l3">

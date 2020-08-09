@@ -209,6 +209,7 @@ router.post("/register", async function (req, res) {
           bannerType: "",
           profilePicture: "",
           profilePictureType: "",
+          pinnedTweet: "",
           following: [],
           followers: [],
           retweets: [],

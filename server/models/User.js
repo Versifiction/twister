@@ -27,6 +27,7 @@ const UserSchema = new Schema({
   bannerType: String,
   profilePicture: Buffer,
   profilePictureType: String,
+  pinnedTweet: String,
   creationDate: {
     type: Date,
     default: Date.now,

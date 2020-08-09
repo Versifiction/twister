@@ -154,7 +154,10 @@ function AccountNav(props) {
               <button
                 className="btn modal-close"
                 onClick={(e) => tweet(e)}
-                disabled={props.newTweet.tweetValue.length > 140}
+                disabled={
+                  props.newTweet.tweetValue.length === 0 ||
+                  props.newTweet.tweetValue.length > 140
+                }
               >
                 Tweeter
               </button>

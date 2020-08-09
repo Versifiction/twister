@@ -1,0 +1,13 @@
+.new-tweet-counter-container-home {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.new-tweet-counter-home {
+  margin-right: 10px;
+}
+
+.New-Tweet {
+  margin-bottom: 10px;
+}
