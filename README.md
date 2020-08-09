@@ -28,6 +28,15 @@ Un utilisateur peut :
 - consulter des suggestions de personnes à suivre<br/>
 - consulter des pages statiques (A propos, Contact...)<br/>
 
+(A venir :
+
+- échanger des messages privés avec une autre personne<br/>
+- supprimer son compte<br/>
+- voir les messages likés d'un autre utilisateur<br/>
+- créer des listes d'utilisateurs<br/>
+- consulter les Trending Topics<br/>
+  )
+
 #### Langages
 
 Javascript<br/>
