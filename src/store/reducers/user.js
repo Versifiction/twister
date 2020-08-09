@@ -8,6 +8,7 @@ import {
   GET_FEED_USER,
   GET_PICTURE,
   GET_SUGGESTIONS,
+  GET_TWEET_DETAIL,
   GET_USER_INFO,
   GET_USER_TWEETS,
   LIKE_TWEET,
@@ -24,12 +25,13 @@ import {
 } from "../constants/types";
 
 const initialState = {
+  current: {},
   isConnected: false,
   isLoading: true,
-  current: {},
   profile: {},
-  tweets: [],
   suggestions: [],
+  tweetDetail: [],
+  tweets: [],
 };
 
 export default function user(state = initialState, action) {
@@ -70,6 +72,11 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         profile: { ...state.profile, profilePicture: action.payload },
+      };
+    case GET_TWEET_DETAIL:
+      return {
+        ...state,
+        tweetDetail: action.payload,
       };
     case GET_USER_INFO:
       return {

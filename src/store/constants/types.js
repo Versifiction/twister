@@ -7,6 +7,7 @@ export const GET_BANNER = "GET_BANNER";
 export const GET_ERRORS = "GET_ERRORS";
 export const GET_FEED_USER = "GET_FEED_USER";
 export const GET_SUGGESTIONS = "GET_SUGGESTIONS";
+export const GET_TWEET_DETAIL = "GET_TWEET_DETAIL";
 export const GET_PICTURE = "GET_PICTURE";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const GET_USER_TWEETS = "GET_USER_TWEETS";

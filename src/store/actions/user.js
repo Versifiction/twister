@@ -10,9 +10,9 @@ import {
   GET_ERRORS,
   GET_FEED_USER,
   GET_PICTURE,
-  GET_SUGGESTIONS,
+  GET_SUGGESTIONS, 
   GET_USER_INFO,
-  GET_USER_TWEETS,
+  GET_USER_TWEETS, 
   LOADING_ACCOUNT,
   LOADING_FEED,
   LOADING_SETTINGS,
@@ -51,7 +51,7 @@ export const getUserTweets = (id) => (dispatch) => {
   });
 
   axios
-    .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/${id}`)
+    .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/user/${id}`)
     .then((res) => {
       dispatch({
         type: GET_USER_TWEETS,

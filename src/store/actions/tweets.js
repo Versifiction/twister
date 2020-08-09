@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import {
+  GET_TWEET_DETAIL,
   LIKE_TWEET,
   NEW_TWEET_INPUT_CHANGE,
   PIN_TWEET,
@@ -147,6 +148,21 @@ export const unpinTweet = (idUser) => (dispatch) => {
       dispatch({
         type: UNPIN_TWEET,
         payload: idUser,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const getTweetDetail = (id) => (dispatch) => {
+  axios
+    .get(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/${id}`)
+    .then((res) => {
+      console.log("res ", res);
+      dispatch({
+        type: GET_TWEET_DETAIL,
+        payload: res.data[0],
       });
     })
     .catch((err) => {

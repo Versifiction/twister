@@ -38,8 +38,15 @@ router.post("/new-tweet", cors(corsOptions), async function (req, res) {
     .catch((err) => console.log(err));
 });
 
+// route pour avoir le détail d'un tweet
+router.get("/:id", async function (req, res) {
+  const tweet = await Tweet.find({ _id: req.params.id });
+
+  res.send(tweet);
+});
+
 // route pour avoir les tweets d'un utilisateur + ses retweets (page Account -> /user/:user)
-router.get("/:id", cors(corsOptions), async function (req, res) {
+router.get("/user/:id", cors(corsOptions), async function (req, res) {
   const userTweets = await Tweet.find({ writerId: req.params.id }).sort({
     tweetedAt: -1,
   });
@@ -87,7 +94,7 @@ router.delete("/delete/:id", cors(corsOptions), async function (req, res) {
   res.send(tweets);
 });
 
-// route pour likrt un tweet
+// route pour liker un tweet
 router.post("/like/:idtweet", cors(corsOptions), async function (req, res) {
   const currentUser = req.body.idUser;
   const idTweet = req.params.idtweet;
@@ -188,7 +195,7 @@ router.post("/pin", cors(corsOptions), async function (req, res) {
   res.send(user);
 });
 
-// route pour épingler un tweet
+// route pour déépingler un tweet
 router.post("/unpin", cors(corsOptions), async function (req, res) {
   const currentUser = req.body.idUser;
 
