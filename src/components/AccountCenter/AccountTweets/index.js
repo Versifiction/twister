@@ -222,7 +222,11 @@ function AccountTweets(props) {
                         props.profile.pinnedTweet === tweet._id.toString(),
                     })}
                     aria-hidden="true"
-                    onClick={() => props.pinTweet(tweet._id, props.current.id)}
+                    onClick={() =>
+                      props.profile.pinnedTweet === ""
+                        ? props.pinTweet(tweet._id, props.current.id)
+                        : props.unpinTweet(props.current.id)
+                    }
                   ></i>
                 </div>
               )}

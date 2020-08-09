@@ -138,7 +138,7 @@ export const pinTweet = (idTweet, idUser) => (dispatch) => {
     });
 };
 
-export const unpinTweet = (idTweet, idUser) => (dispatch) => {
+export const unpinTweet = (idUser) => (dispatch) => {
   axios
     .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/unpin`, {
       idUser,
