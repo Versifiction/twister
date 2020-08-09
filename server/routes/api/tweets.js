@@ -162,7 +162,7 @@ router.post("/unretweet/:idtweet", cors(corsOptions), async function (
   res.send(user);
 });
 
-// route pour déretweeter un tweet
+// route pour protéger ses tweets
 router.post("/protected", cors(corsOptions), async function (req, res) {
   const currentUser = req.body.idUser;
   const isProtected = req.body.isProtected;
@@ -171,6 +171,28 @@ router.post("/protected", cors(corsOptions), async function (req, res) {
     { _id: currentUser },
     { protected: isProtected }
   );
+
+  res.send(user);
+});
+
+// route pour épingler un tweet
+router.post("/pin", cors(corsOptions), async function (req, res) {
+  const currentUser = req.body.idUser;
+  const idTweet = req.body.idTweet;
+
+  const user = await User.updateOne(
+    { _id: currentUser },
+    { pinnedTweet: idTweet }
+  );
+
+  res.send(user);
+});
+
+// route pour épingler un tweet
+router.post("/unpin", cors(corsOptions), async function (req, res) {
+  const currentUser = req.body.idUser;
+
+  const user = await User.updateOne({ _id: currentUser }, { pinnedTweet: "" });
 
   res.send(user);
 });

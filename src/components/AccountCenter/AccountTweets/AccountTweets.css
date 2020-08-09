@@ -43,17 +43,29 @@
   color: green;
 }
 
+.pinnedTweet {
+  color: #3aaae1;
+}
+
 .isARetweet {
   display: block;
 }
 
-.AccountTweet-isARetweet {
+.AccountTweet-isARetweet,
+.AccountTweet-isAPin {
   display: inline;
 }
 
 .isARetweet-icon,
-.AccountTweet-isARetweet {
+.AccountTweet-isARetweet,
+.isAPin-icon,
+.AccountTweet-isAPin {
   color: #8899a6;
   margin-right: 4px;
   font-size: 0.75rem !important;
+}
+
+.separate {
+  height: 10px;
+  background-color: #8899a6;
 }

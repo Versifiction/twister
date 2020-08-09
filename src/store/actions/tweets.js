@@ -3,11 +3,13 @@ import axios from "axios";
 import {
   LIKE_TWEET,
   NEW_TWEET_INPUT_CHANGE,
+  PIN_TWEET,
   SEND_NEW_TWEET,
   RESET_NEW_TWEET_INPUT,
   RETWEET_TWEET,
   UNLIKE_TWEET,
   UNRETWEET_TWEET,
+  UNPIN_TWEET,
 } from "../constants/types";
 
 export const sendNewTweet = (tweet) => (dispatch) => {
@@ -114,6 +116,39 @@ export const toggleProtectedTweets = (idUser, isProtected) => (dispatch) => {
       isProtected,
     })
     .then((res) => {})
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const pinTweet = (idTweet, idUser) => (dispatch) => {
+  axios
+    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/pin`, {
+      idTweet,
+      idUser,
+    })
+    .then((res) => {
+      dispatch({
+        type: PIN_TWEET,
+        payload: idTweet,
+      });
+    })
+    .catch((err) => {
+      console.log("err ", err);
+    });
+};
+
+export const unpinTweet = (idTweet, idUser) => (dispatch) => {
+  axios
+    .post(`${process.env.REACT_APP_SERVER_PORT}/api/tweets/unpin`, {
+      idUser,
+    })
+    .then((res) => {
+      dispatch({
+        type: UNPIN_TWEET,
+        payload: idUser,
+      });
+    })
     .catch((err) => {
       console.log("err ", err);
     });

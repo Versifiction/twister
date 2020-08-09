@@ -13,11 +13,13 @@ import {
   LIKE_TWEET,
   LOGIN,
   LOGOUT,
+  PIN_TWEET,
   RETWEET_TWEET,
   SEND_NEW_TWEET,
   SET_CURRENT_USER,
   UNFOLLOW_USER,
   UNLIKE_TWEET,
+  UNPIN_TWEET,
   UNRETWEET_TWEET,
 } from "../constants/types";
 
@@ -101,6 +103,11 @@ export default function user(state = initialState, action) {
       return { ...state, isConnected: true };
     case LOGOUT:
       return { ...state, isConnected: false, current: {} };
+    case PIN_TWEET:
+      return {
+        ...state,
+        profile: { ...state.profile, pinnedTweet: action.payload },
+      };
     case RETWEET_TWEET:
       state.tweets
         .filter((t) => t._id === action.idTweet)[0]
@@ -140,14 +147,12 @@ export default function user(state = initialState, action) {
           likes: state.profile.likes.filter((t) => t !== action.idTweet),
         },
       };
+    case UNPIN_TWEET:
+      return {
+        ...state,
+        profile: { ...state.profile, pinnedTweet: "" },
+      };
     case UNRETWEET_TWEET:
-      console.log("id profil visité ", state.profile._id);
-      console.log("id connecté ", state.current.id);
-      console.log(
-        "tweet ",
-        state.tweets.filter((t) => t._id === action.idTweet)[0].writerId
-      );
-
       const indexRt = state.tweets
         .filter((t) => t._id === action.idTweet)[0]
         .retweets.indexOf(action.idUser);

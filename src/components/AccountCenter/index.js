@@ -31,11 +31,6 @@ function AccountCenter(props) {
   const [biography, setBiography] = useState();
 
   useEffect(() => {
-    console.log("pictureFile ", pictureFile);
-    console.log("bannerFile ", bannerFile);
-  }, [pictureFile, bannerFile]);
-
-  useEffect(() => {
     props.getUserInfo(props.urlName);
     if (props.profile) {
       props.getPicture(props.profile._id);
@@ -54,7 +49,6 @@ function AccountCenter(props) {
 
   function handleClick(e) {
     if (editable) {
-      console.log(e.target.name);
       if (e.target.name === "banner") {
         hiddenBannerFileInput.current.click();
       } else if (e.target.name === "picture") {
@@ -114,7 +108,6 @@ function AccountCenter(props) {
 
   return (
     <div className="AccountCenter">
-      {!props.profile._id && <p>Cet utilisateur n'existe pas</p>}
       <form method="post" encType="multipart/form-data" onSubmit={saveEdits}>
         <div className="banner-img-container">
           {editable && (

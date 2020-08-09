@@ -131,7 +131,6 @@ router.get("/banner/:id", function (req, res) {
 
 // route pour avoir les infos d'un utilisateur
 router.get("/user/:username", async function (req, res) {
-  console.log("username ", req.params.username);
   const user = await User.find(
     { username: req.params.username },
     { password: 0 }
