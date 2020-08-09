@@ -47,99 +47,108 @@ function AccountTweets(props) {
           .map((tweet) => (
             <>
               <div className="AccountTweet" key={tweet._id}>
-                {tweet._id.toString() === props.profile.pinnedTweet && (
-                  <div className="isAPin">
-                    <i className="fa fa-map-pin isAPin-icon"></i>
-                    <p className="AccountTweet-isAPin">
-                      {props.profile.name} a épinglé
-                    </p>
-                  </div>
-                )}
-                <Link
-                  href={`/user/${tweet.writerUsername}`}
-                  to={`/user/${tweet.writerUsername}`}
-                >
-                  <span className="AccountTweet-name">{tweet.writerName}</span>
-                  <span className="AccountTweet-username">
-                    @{tweet.writerUsername}
+                <Link href={`/tweet/${tweet._id}`} to={`/tweet/${tweet._id}`}>
+                  {tweet._id.toString() === props.profile.pinnedTweet && (
+                    <div className="isAPin">
+                      <i className="fa fa-map-pin isAPin-icon"></i>
+                      <p className="AccountTweet-isAPin">
+                        {props.profile.name} a épinglé
+                      </p>
+                    </div>
+                  )}
+                  <Link
+                    href={`/user/${tweet.writerUsername}`}
+                    to={`/user/${tweet.writerUsername}`}
+                  >
+                    <span className="AccountTweet-name">
+                      {tweet.writerName}
+                    </span>
+                    <span className="AccountTweet-username">
+                      @{tweet.writerUsername}
+                    </span>
+                  </Link>
+                  <span className="AccountTweet-bullet">•</span>
+                  <span className="AccountTweet-tweetedAt">
+                    {moment(tweet.tweetedAt).locale("fr").calendar()}
                   </span>
-                </Link>
-                <span className="AccountTweet-bullet">•</span>
-                <span className="AccountTweet-tweetedAt">
-                  {moment(tweet.tweetedAt).locale("fr").calendar()}
-                </span>
-                <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
-                <div className="AccountTweet-icons">
-                  <div className="AccountTweet-icon">
-                    <i className="fa fa-reply" aria-hidden="true"></i>
-                    {tweet.replies.length > 0 && (
-                      <span className="AccountTweet-replies">
-                        {tweet.replies.length}
-                      </span>
-                    )}
-                  </div>
-                  <div className="AccountTweet-icon">
-                    <i
-                      className={classnames("fa fa-retweet", {
-                        retweeted: tweet.retweets.includes(props.current.id),
-                      })}
-                      onClick={() => toggleRetweet(tweet._id, props.current.id)}
-                      aria-hidden="true"
-                    ></i>
-                    {tweet.retweets.length > 0 && (
-                      <span
-                        className={classnames("AccountTweet-retweets", {
+                  <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
+                  <div className="AccountTweet-icons">
+                    <div className="AccountTweet-icon">
+                      <i className="fa fa-reply" aria-hidden="true"></i>
+                      {tweet.replies.length > 0 && (
+                        <span className="AccountTweet-replies">
+                          {tweet.replies.length}
+                        </span>
+                      )}
+                    </div>
+                    <div className="AccountTweet-icon">
+                      <i
+                        className={classnames("fa fa-retweet", {
                           retweeted: tweet.retweets.includes(props.current.id),
                         })}
-                      >
-                        {tweet.retweets.length}
-                      </span>
-                    )}
-                  </div>
-                  <div className="AccountTweet-icon">
-                    <i
-                      className={classnames("fa fa-heart", {
-                        liked: tweet.likes.includes(props.current.id),
-                      })}
-                      onClick={() => toggleLike(tweet._id, props.current.id)}
-                      aria-hidden="true"
-                    ></i>
-                    {tweet.likes.length > 0 && (
-                      <span
-                        className={classnames("AccountTweet-likes", {
+                        onClick={() =>
+                          toggleRetweet(tweet._id, props.current.id)
+                        }
+                        aria-hidden="true"
+                      ></i>
+                      {tweet.retweets.length > 0 && (
+                        <span
+                          className={classnames("AccountTweet-retweets", {
+                            retweeted: tweet.retweets.includes(
+                              props.current.id
+                            ),
+                          })}
+                        >
+                          {tweet.retweets.length}
+                        </span>
+                      )}
+                    </div>
+                    <div className="AccountTweet-icon">
+                      <i
+                        className={classnames("fa fa-heart", {
                           liked: tweet.likes.includes(props.current.id),
                         })}
-                      >
-                        {tweet.likes.length}
-                      </span>
+                        onClick={() => toggleLike(tweet._id, props.current.id)}
+                        aria-hidden="true"
+                      ></i>
+                      {tweet.likes.length > 0 && (
+                        <span
+                          className={classnames("AccountTweet-likes", {
+                            liked: tweet.likes.includes(props.current.id),
+                          })}
+                        >
+                          {tweet.likes.length}
+                        </span>
+                      )}
+                    </div>
+                    {props.profile.username === props.current.username && (
+                      <div className="AccountTweet-icon">
+                        <i
+                          className={classnames("fa fa-map-pin", {
+                            pinnedTweet:
+                              props.profile.pinnedTweet ===
+                              tweet._id.toString(),
+                          })}
+                          aria-hidden="true"
+                          onClick={() =>
+                            props.profile.pinnedTweet === ""
+                              ? props.pinTweet(tweet._id, props.current.id)
+                              : props.unpinTweet(props.current.id)
+                          }
+                        ></i>
+                      </div>
+                    )}
+                    {props.profile.username === props.current.username && (
+                      <div className="AccountTweet-icon">
+                        <i
+                          className="fa fa-trash"
+                          aria-hidden="true"
+                          onClick={() => props.deleteUserTweet(tweet._id)}
+                        ></i>
+                      </div>
                     )}
                   </div>
-                  {props.profile.username === props.current.username && (
-                    <div className="AccountTweet-icon">
-                      <i
-                        className={classnames("fa fa-map-pin", {
-                          pinnedTweet:
-                            props.profile.pinnedTweet === tweet._id.toString(),
-                        })}
-                        aria-hidden="true"
-                        onClick={() =>
-                          props.profile.pinnedTweet === ""
-                            ? props.pinTweet(tweet._id, props.current.id)
-                            : props.unpinTweet(props.current.id)
-                        }
-                      ></i>
-                    </div>
-                  )}
-                  {props.profile.username === props.current.username && (
-                    <div className="AccountTweet-icon">
-                      <i
-                        className="fa fa-trash"
-                        aria-hidden="true"
-                        onClick={() => props.deleteUserTweet(tweet._id)}
-                      ></i>
-                    </div>
-                  )}
-                </div>
+                </Link>
               </div>
               <div className="separate"></div>
             </>
@@ -147,99 +156,101 @@ function AccountTweets(props) {
       {props.tweets &&
         props.tweets.map((tweet) => (
           <div className="AccountTweet" key={tweet._id}>
-            {props.profile._id !== tweet.writerId && (
-              <div className="isARetweet">
-                <i className="fa fa-retweet isARetweet-icon"></i>
-                <p className="AccountTweet-isARetweet">
-                  {props.profile.name} a retweeté
-                </p>
-              </div>
-            )}
-            <Link
-              href={`/user/${tweet.writerUsername}`}
-              to={`/user/${tweet.writerUsername}`}
-            >
-              <span className="AccountTweet-name">{tweet.writerName}</span>
-              <span className="AccountTweet-username">
-                @{tweet.writerUsername}
+            <Link href={`/tweet/${tweet._id}`} to={`/tweet/${tweet._id}`}>
+              {props.profile._id !== tweet.writerId && (
+                <div className="isARetweet">
+                  <i className="fa fa-retweet isARetweet-icon"></i>
+                  <p className="AccountTweet-isARetweet">
+                    {props.profile.name} a retweeté
+                  </p>
+                </div>
+              )}
+              <Link
+                href={`/user/${tweet.writerUsername}`}
+                to={`/user/${tweet.writerUsername}`}
+              >
+                <span className="AccountTweet-name">{tweet.writerName}</span>
+                <span className="AccountTweet-username">
+                  @{tweet.writerUsername}
+                </span>
+              </Link>
+              <span className="AccountTweet-bullet">•</span>
+              <span className="AccountTweet-tweetedAt">
+                {moment(tweet.tweetedAt).locale("fr").calendar()}
               </span>
-            </Link>
-            <span className="AccountTweet-bullet">•</span>
-            <span className="AccountTweet-tweetedAt">
-              {moment(tweet.tweetedAt).locale("fr").calendar()}
-            </span>
-            <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
-            <div className="AccountTweet-icons">
-              <div className="AccountTweet-icon">
-                <i className="fa fa-reply" aria-hidden="true"></i>
-                {tweet.replies.length > 0 && (
-                  <span className="AccountTweet-replies">
-                    {tweet.replies.length}
-                  </span>
-                )}
-              </div>
-              <div className="AccountTweet-icon">
-                <i
-                  className={classnames("fa fa-retweet", {
-                    retweeted: tweet.retweets.includes(props.current.id),
-                  })}
-                  onClick={() => toggleRetweet(tweet._id, props.current.id)}
-                  aria-hidden="true"
-                ></i>
-                {tweet.retweets.length > 0 && (
-                  <span
-                    className={classnames("AccountTweet-retweets", {
+              <p className="AccountTweet-tweetValue">{tweet.tweetValue}</p>
+              <div className="AccountTweet-icons">
+                <div className="AccountTweet-icon">
+                  <i className="fa fa-reply" aria-hidden="true"></i>
+                  {tweet.replies.length > 0 && (
+                    <span className="AccountTweet-replies">
+                      {tweet.replies.length}
+                    </span>
+                  )}
+                </div>
+                <div className="AccountTweet-icon">
+                  <i
+                    className={classnames("fa fa-retweet", {
                       retweeted: tweet.retweets.includes(props.current.id),
                     })}
-                  >
-                    {tweet.retweets.length}
-                  </span>
-                )}
-              </div>
-              <div className="AccountTweet-icon">
-                <i
-                  className={classnames("fa fa-heart", {
-                    liked: tweet.likes.includes(props.current.id),
-                  })}
-                  onClick={() => toggleLike(tweet._id, props.current.id)}
-                  aria-hidden="true"
-                ></i>
-                {tweet.likes.length > 0 && (
-                  <span
-                    className={classnames("AccountTweet-likes", {
+                    onClick={() => toggleRetweet(tweet._id, props.current.id)}
+                    aria-hidden="true"
+                  ></i>
+                  {tweet.retweets.length > 0 && (
+                    <span
+                      className={classnames("AccountTweet-retweets", {
+                        retweeted: tweet.retweets.includes(props.current.id),
+                      })}
+                    >
+                      {tweet.retweets.length}
+                    </span>
+                  )}
+                </div>
+                <div className="AccountTweet-icon">
+                  <i
+                    className={classnames("fa fa-heart", {
                       liked: tweet.likes.includes(props.current.id),
                     })}
-                  >
-                    {tweet.likes.length}
-                  </span>
+                    onClick={() => toggleLike(tweet._id, props.current.id)}
+                    aria-hidden="true"
+                  ></i>
+                  {tweet.likes.length > 0 && (
+                    <span
+                      className={classnames("AccountTweet-likes", {
+                        liked: tweet.likes.includes(props.current.id),
+                      })}
+                    >
+                      {tweet.likes.length}
+                    </span>
+                  )}
+                </div>
+                {props.profile.username === props.current.username && (
+                  <div className="AccountTweet-icon">
+                    <i
+                      className={classnames("fa fa-map-pin", {
+                        pinnedTweet:
+                          props.profile.pinnedTweet === tweet._id.toString(),
+                      })}
+                      aria-hidden="true"
+                      onClick={() =>
+                        props.profile.pinnedTweet === ""
+                          ? props.pinTweet(tweet._id, props.current.id)
+                          : props.unpinTweet(props.current.id)
+                      }
+                    ></i>
+                  </div>
+                )}
+                {props.profile.username === props.current.username && (
+                  <div className="AccountTweet-icon">
+                    <i
+                      className="fa fa-trash"
+                      aria-hidden="true"
+                      onClick={() => props.deleteUserTweet(tweet._id)}
+                    ></i>
+                  </div>
                 )}
               </div>
-              {props.profile.username === props.current.username && (
-                <div className="AccountTweet-icon">
-                  <i
-                    className={classnames("fa fa-map-pin", {
-                      pinnedTweet:
-                        props.profile.pinnedTweet === tweet._id.toString(),
-                    })}
-                    aria-hidden="true"
-                    onClick={() =>
-                      props.profile.pinnedTweet === ""
-                        ? props.pinTweet(tweet._id, props.current.id)
-                        : props.unpinTweet(props.current.id)
-                    }
-                  ></i>
-                </div>
-              )}
-              {props.profile.username === props.current.username && (
-                <div className="AccountTweet-icon">
-                  <i
-                    className="fa fa-trash"
-                    aria-hidden="true"
-                    onClick={() => props.deleteUserTweet(tweet._id)}
-                  ></i>
-                </div>
-              )}
-            </div>
+            </Link>
           </div>
         ))}
     </div>

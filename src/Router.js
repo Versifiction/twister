@@ -14,6 +14,7 @@ import Account from "./pages/Account";
 import Lists from "./pages/Lists";
 import Explore from "./pages/Explore";
 import Settings from "./pages/Settings";
+import TweetDetail from "./pages/TweetDetail";
 import Notifications from "./pages/Notifications";
 import Messages from "./pages/Messages";
 import Signets from "./pages/Signets";
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/connexion" exact component={Connexion} />
       <Route path="/inscription" exact component={Inscription} />
       <Route path="/user/:username" exact component={Account} />
+      <Route path="/tweet/:id" exact component={TweetDetail} />
       <Route path="/notifications" exact component={Notifications} />
       <Route path="/explore" exact component={Explore} />
       <Route path="/messages" exact component={Messages} />

@@ -11,24 +11,39 @@ En cas de questions, suggestions ou remarques, merci de me contacter par mail : 
 - npm start, pour lancer le serveur et le client
 - Se rendre sur http://localhost:3000
 
-### Technologies utilisées
+### Fonctionnalités
+
+Un utilisateur peut :
+
+- s'inscrire<br/>
+- se connecter<br/>
+- écrire un tweet<br/>
+- suivre des personnes<br/>
+- modifier sa biographie, son nom, sa photo de profil et sa bannière<br/>
+- retweeter des tweets<br/>
+- liker des tweets<br/>
+- protéger ses tweets<br/>
+- épingler un de ses tweets<br/>
+- suppimer un de ses tweets<br/>
+- consulter des suggestions de personnes à suivre<br/>
+- consulter des pages statiques (A propos, Contact...)<br/>
 
 #### Langages
 
-Javascript
-Front-end : React, Redux, MaterializeCSS
-Back-end : NodeJS, ExpressJS
-ORM : Mongoose
-Base de données : MongoDB (Atlas pour le Cloud, Compass pour l'interface graphique)
+Javascript<br/>
+Front-end : React, Redux, MaterializeCSS<br/>
+Back-end : NodeJS, ExpressJS<br/>
+ORM : Mongoose<br/>
+Base de données : MongoDB (Atlas pour le Cloud, Compass pour l'interface graphique)<br/>
 
 #### Packages notables
 
-axios, pour les requêtes HTTP
-bcryptjs, pour le cryptage de mots de passe
-cors, pour l'autorisation de partages de ressource entre divers domaines
-helmet, pour l'utilisation de middlewares préconçus pour la sécurité du backend
-morgan, pour des logs concis à chaque requête effectuée au back-end
-moment, pour le formattage des dates
-react-redux, redux & redux-thunk, pour la gestion du state global de l'application
-socket.io & socket.io-client, pour l'utilisation de web sockets
-validator, pour la vérification du contenu des données des formulaires
+axios, pour les requêtes HTTP<br/>
+bcryptjs, pour le cryptage de mots de passe<br/>
+cors, pour l'autorisation de partages de ressource entre divers domaines<br/>
+helmet, pour l'utilisation de middlewares préconçus pour la sécurité du backend<br/>
+morgan, pour des logs concis à chaque requête effectuée au back-end<br/>
+moment, pour le formattage des dates<br/>
+react-redux, redux & redux-thunk, pour la gestion du state global de l'application<br/>
+socket.io & socket.io-client, pour l'utilisation de web sockets<br/>
+validator, pour la vérification du contenu des données des formulaires<br/>

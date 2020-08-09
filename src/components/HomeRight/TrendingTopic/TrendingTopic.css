@@ -33,7 +33,7 @@
 
 .trending-topic-after:hover,
 .trending-topic-content:hover {
-  background-color: #aaa;
+  background-color: #414141;
   transition: 0.5s;
   cursor: pointer;
 }

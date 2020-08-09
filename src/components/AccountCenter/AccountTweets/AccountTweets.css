@@ -3,6 +3,12 @@
   border-top: 1px solid white;
 }
 
+.AccountTweet:hover {
+  cursor: pointer;
+  background-color: #414141;
+  transition: 0.5s;
+}
+
 .AccountTweet-name,
 .AccountTweet-username,
 .AccountTweet-tweetedAt,
