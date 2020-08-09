@@ -139,10 +139,15 @@ function Feed(props) {
                   {tweet.writerUsername === props.current.username && (
                     <div className="AccountTweet-icon">
                       <i
-                        className="fa fa-map-pin"
+                        className={classnames("fa fa-map-pin", {
+                          pinnedTweet:
+                            props.profile.pinnedTweet === tweet._id.toString(),
+                        })}
                         aria-hidden="true"
                         onClick={() =>
-                          props.pinTweet(tweet._id, props.current.id)
+                          props.profile.pinnedTweet === ""
+                            ? props.pinTweet(tweet._id, props.current.id)
+                            : props.unpinTweet(props.current.id)
                         }
                       ></i>
                     </div>
