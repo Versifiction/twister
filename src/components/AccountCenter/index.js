@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import classnames from "classnames";
+import Viewer from "react-viewer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
@@ -21,6 +22,8 @@ import placeholderBanner from "../../assets/placeholderBanner.png";
 import AccountTweets from "./AccountTweets";
 
 function AccountCenter(props) {
+  const [bannerVisible, setBannerVisible] = useState(false);
+  const [profilVisible, setProfilVisible] = useState(false);
   const [pictureFile, setPictureFile] = useState(null);
   const [bannerFile, setBannerFile] = useState(null);
   const hiddenPictureFileInput = useRef(null);
@@ -53,6 +56,15 @@ function AccountCenter(props) {
         hiddenBannerFileInput.current.click();
       } else if (e.target.name === "picture") {
         hiddenPictureFileInput.current.click();
+      }
+    } else {
+      console.log("not editable");
+      if (e.target.name === "banner") {
+        console.log("banner");
+        setBannerVisible(true);
+      } else if (e.target.name === "picture") {
+        console.log("picture");
+        setProfilVisible(true);
       }
     }
   }
@@ -128,13 +140,27 @@ function AccountCenter(props) {
               onClick={handleClick}
             />
           ) : (
-            <img
-              src={`${process.env.REACT_APP_SERVER_PORT}/api/users/banner/${props.profile._id}`}
-              alt="Placeholder banniere"
-              name="banner"
-              className="banner-img"
-              onClick={handleClick}
-            />
+            <>
+              <img
+                src={`${process.env.REACT_APP_SERVER_PORT}/api/users/banner/${props.profile._id}`}
+                alt="Banniere"
+                name="banner"
+                className="banner-img"
+                onClick={handleClick}
+              />
+              <Viewer
+                visible={bannerVisible}
+                onClose={() => {
+                  setBannerVisible(false);
+                }}
+                images={[
+                  {
+                    src: `${process.env.REACT_APP_SERVER_PORT}/api/users/banner/${props.profile._id}`,
+                    alt: "Banniere",
+                  },
+                ]}
+              />
+            </>
           )}
         </div>
         <div className="profile-img-container">
@@ -156,13 +182,27 @@ function AccountCenter(props) {
               onClick={handleClick}
             />
           ) : (
-            <img
-              src={`${process.env.REACT_APP_SERVER_PORT}/api/users/picture/${props.profile._id}`}
-              alt="Placeholder profil"
-              name="picture"
-              className="profile-img"
-              onClick={handleClick}
-            />
+            <>
+              <img
+                src={`${process.env.REACT_APP_SERVER_PORT}/api/users/picture/${props.profile._id}`}
+                alt="Profil"
+                name="picture"
+                className="profile-img"
+                onClick={handleClick}
+              />
+              <Viewer
+                visible={profilVisible}
+                onClose={() => {
+                  setProfilVisible(false);
+                }}
+                images={[
+                  {
+                    src: `${process.env.REACT_APP_SERVER_PORT}/api/users/picture/${props.profile._id}`,
+                    alt: "Profil",
+                  },
+                ]}
+              />
+            </>
           )}
         </div>
       </form>
