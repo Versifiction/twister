@@ -1,3 +1,5 @@
+Repository du front-end de Twister
+
 ## Projet
 
 Twister est un mini réseau social copié à l'identique sur Twitter, dans le but d'élargir mes compétences sur une stack MERN (Mongo, Express, React, Node).
