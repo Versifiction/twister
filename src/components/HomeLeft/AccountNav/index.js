@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import io from "socket.io-client";
+import Picker from "emoji-picker-react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,6 +16,8 @@ import "./AccountNav.css";
 
 function AccountNav(props) {
   const newTweetInput = useRef(null);
+  const [emojiPicker, setEmojiPicker] = useState(false);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
   // const socket = io(process.env.REACT_APP_SERVER_PORT, { secure: true });
 
   useEffect(() => {
@@ -22,6 +25,11 @@ function AccountNav(props) {
     //   console.log("data ", data);
     // });
   });
+
+  function onEmojiClick(event, emojiObject) {
+    setChosenEmoji(emojiObject);
+    props.newTweetInputChange(props.newTweet.tweetValue + emojiObject.emoji);
+  }
 
   function focusNewTweetInput() {
     newTweetInput.current.focus();
@@ -137,6 +145,13 @@ function AccountNav(props) {
             />
           </div>
           <div className="modal-footer">
+            <div className="new-tweet-emoji">
+              <i
+                className="fa fa-smile-o fa-2x"
+                aria-hidden="true"
+                onClick={() => setEmojiPicker(!emojiPicker)}
+              ></i>
+            </div>
             <div className="new-tweet-counter-container">
               <span
                 className={classNames("new-tweet-length", {
@@ -149,20 +164,21 @@ function AccountNav(props) {
               <span className="new-tweet-max-length">
                 /{props.newTweet.maxLength}
               </span>
-            </div>
-            <div>
-              <button
-                className="btn modal-close"
-                onClick={(e) => tweet(e)}
-                disabled={
-                  props.newTweet.tweetValue.length === 0 ||
-                  props.newTweet.tweetValue.length > 140
-                }
-              >
-                Tweeter
-              </button>
+              <div className="new-tweet-button-container">
+                <button
+                  className="btn modal-close"
+                  onClick={(e) => tweet(e)}
+                  disabled={
+                    props.newTweet.tweetValue.length === 0 ||
+                    props.newTweet.tweetValue.length > 140
+                  }
+                >
+                  Tweeter
+                </button>
+              </div>
             </div>
           </div>
+          {emojiPicker && <Picker onEmojiClick={onEmojiClick} />}
         </div>
       </section>
     </div>

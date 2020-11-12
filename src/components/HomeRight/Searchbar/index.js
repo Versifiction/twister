@@ -11,7 +11,7 @@ function Searchbar() {
             <input
               id="search"
               type="search"
-              placeholder="Recherche sur Twersi"
+              placeholder="Recherche sur Twister"
               required
             />
             <label className="label-icon" htmlFor="search">
